@@ -25,7 +25,20 @@
         <p>{{task.description}}</p>
 
         <h6 class="subheading"><v-icon>show_chart</v-icon> Status</h6>
-        <p>{{task.status}}</p>
+        <p>
+          <v-chip  outline :class="{
+              red: task.status === 'new',
+              'red--text':task.status === 'new',
+              orange: task.status === 'in_progress',
+              'orange--text':task.status === 'in_progress',
+              green: task.status === 'done',
+              'green--text':task.status === 'done'
+            }">
+            {{task.status}}
+          </v-chip>
+          <span v-if="task.status === 'new'"><v-btn class="orange white--text" @click.native="startTask(task)">Start task</v-btn></span>
+          <span v-if="task.status === 'in_progress'"><v-btn class="green white--text" @click.native="finishTask(task)">Finish task</v-btn></span>
+        </p>
 
         <h6 class="subheading"><v-icon>date_range</v-icon>Date Created</h6>
         <p>{{task.created}}</p>
@@ -112,6 +125,12 @@
       showRemoveDialog (task) {
         this.taskToDelete = task
         this.dialog = true
+      },
+      startTask (task) {
+        this.$store.commit('startTask', task)
+      },
+      finishTask (task) {
+        this.$store.commit('finishTask', task)
       }
     }
   }
