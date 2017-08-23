@@ -14,7 +14,7 @@
       <v-card-actions>
         <span class="grey--text">{{ task.deadline }}</span>
         <v-spacer></v-spacer>
-        <v-btn @click.native="removeTask(task)" class="red white--text" dark>
+        <v-btn @click.native="showRemoveDialog(task)" class="red white--text" dark>
           <v-icon dark>delete</v-icon>
             Delete Task
         </v-btn>
@@ -28,6 +28,24 @@
       </v-card-text>
       <v-btn to="/create" class="primary"><v-icon class="white--text">note_add</v-icon>  Create New Task</v-btn>
     </v-card> 
+
+    <!-- Ask for user to confirm delete action -->
+    <v-layout row justify-center style="position: relative;">
+      <v-dialog v-model="dialog">
+        <v-card dark>
+          <v-card-title>
+            <div class="headline">Delete selected task</div>
+          </v-card-title>
+          <v-card-text>Are you sure you want to delete the <b>{{taskToDelete.title}}</b> task?</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn class="green" @click.native="dialog = false">Don't delete</v-btn>
+            <v-btn class="red--text darken-1" flat="flat" @click.native="removeTask">Go ahead</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
+
   </div>
 </template>
 
@@ -36,6 +54,12 @@
 
   export default {
     name: 'landing-page',
+    data () {
+      return {
+        dialog: false,
+        taskToDelete: {}
+      }
+    },
     mounted () { this.$store.commit('getTasks') },
     computed: {
       tasks () {
@@ -52,8 +76,14 @@
       open (link) {
         this.$electron.shell.openExternal(link)
       },
-      removeTask (task) {
-        this.$store.commit('removeTask', task)
+      removeTask () {
+        this.$store.commit('removeTask', this.taskToDelete)
+        this.taskToDelete = {}
+        this.dialog = false
+      },
+      showRemoveDialog (task) {
+        this.taskToDelete = task
+        this.dialog = true
       }
     }
   }
