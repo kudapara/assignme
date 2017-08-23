@@ -13,7 +13,8 @@ export default new Vuex.Store({
       title: '',
       type: 'info', // Either error, info or warning
       show: false
-    }
+    },
+    taskToEdit: null
   },
   mutations: {
     addTask (state, payload) {
@@ -59,6 +60,20 @@ export default new Vuex.Store({
       }
     },
 
+    setTaskToEdit (state, task) {
+      state.taskToEdit = task
+    },
+
+    editTask (state, task) {
+      api.editTask(task)
+      state.taskToEdit = null
+      state.alert = {
+        title: 'successfully edited task',
+        type: 'info',
+        show: true
+      }
+    },
+
     closeAlert (state) {
       state.alert = state.alert = {
         title: '',
@@ -69,7 +84,8 @@ export default new Vuex.Store({
   },
 
   getters: {
-    alert: (state) => state.alert
+    alert: (state) => state.alert,
+    taskToEdit: (state) => state.taskToEdit
   },
   modules,
   strict: process.env.NODE_ENV !== 'production'
