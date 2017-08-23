@@ -46,8 +46,23 @@ function getTasks () {
     .value()
 }
 
+function startTask (id) {
+  db.get('tasks')
+    .find({ id })
+    .assign({ status: 'in_progress' })
+    .write()
+}
+
+function finishTask (id) {
+  db.get('tasks')
+    .find({ id })
+    .assign({ status: 'done' })
+    .write()
+}
 export default {
   createTask,
   getTasks,
-  removeTask
+  removeTask,
+  startTask,
+  finishTask
 }
