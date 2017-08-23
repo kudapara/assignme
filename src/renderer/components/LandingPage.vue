@@ -9,7 +9,15 @@
       </v-btn>
     </v-toolbar>
 
-    <v-card v-for="task in tasks" :key="task.id">
+    <v-card
+      v-for="task in tasks" :key="task.id" 
+      :class="{
+        new: task.status === 'new',
+        in_progress: task.status === 'in_progress',
+        done: task.status === 'done',
+        task: true,
+        'mb-2': true
+      }">
       <v-card-title>{{task.title}}</v-card-title>
       <v-card-actions>
         <span class="grey--text">{{ task.deadline }}</span>
@@ -111,7 +119,7 @@
     padding: 60px 80px;
     width: 100vw;
   }
-
+  
   #logo {
     height: auto;
     margin-bottom: 20px;
@@ -170,5 +178,21 @@
   .doc button.alt {
     color: #42b983;
     background-color: transparent;
+  }
+
+  .new.task {
+    border-left-style:solid;
+    border-left-width:2px;
+    border-color:red
+  }
+  .in_progress.task {
+    border-left-style:solid;
+    border-left-width:2px;
+    border-color:orange
+  }
+  .done.task {
+    border-left-style:solid;
+    border-left-width:2px;
+    border-color:green
   }
 </style>
