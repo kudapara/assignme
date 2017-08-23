@@ -3,6 +3,10 @@
     <v-toolbar class="pink mb-2 elevation-1">
       <v-toolbar-title class="white--text">Assignment Tasks</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-chip outline label class="white--text">
+        {{tasks.length}}
+        Tasks
+      </v-chip>
       <v-btn icon to="/create"><v-icon class="white--text">note_add</v-icon></v-btn>
       <v-btn icon>
         <v-icon>search</v-icon>
