@@ -48,10 +48,13 @@
         <span class="grey--text"><v-icon>date_range</v-icon> DEADLINE: {{ task.deadline }}</span>
         <v-spacer></v-spacer>
 
-        <v-btn v-if="taskToExpand !== task.id" icon class="primary" @click.native="taskToExpand = task.id">
+        <v-btn icon class="green white--text" @click.native="editTask(task)">
+          <v-icon dark>edit</v-icon>
+        </v-btn>
+        <v-btn v-if="taskToExpand !== task.id" icon class="primary white--text" @click.native="taskToExpand = task.id">
           <v-icon dark>expand_more</v-icon>
         </v-btn>
-        <v-btn v-if="taskToExpand === task.id" icon class="primary" @click.native="taskToExpand = ''">
+        <v-btn v-if="taskToExpand === task.id" icon class="primary white--text" @click.native="taskToExpand = ''">
           <v-icon dark>expand_less</v-icon>
         </v-btn>
 
@@ -71,7 +74,7 @@
 
     <!-- Ask for user to confirm delete action -->
     <v-layout row justify-center style="position: relative;">
-      <v-dialog v-model="dialog">
+      <v-dialog v-model="dialog" persistent>
         <v-card dark>
           <v-card-title>
             <div class="headline">Delete selected task</div>
@@ -131,6 +134,10 @@
       },
       finishTask (task) {
         this.$store.commit('finishTask', task)
+      },
+      editTask (task) {
+        this.$store.commit('setTaskToEdit', task)
+        this.$router.push('/create')
       }
     }
   }
