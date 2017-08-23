@@ -68,15 +68,6 @@
       },
       taskToEdit () { return this.$store.getters.taskToEdit }
     },
-    watch: {
-      isEdit (value) {
-        console.log('watching isEdit')
-        if (value === true) {
-          console.log('time to set the task to the edit')
-          this.task = this.taskToEdit
-        }
-      }
-    },
     data () {
       return {
         task: {
