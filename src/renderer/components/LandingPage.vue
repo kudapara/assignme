@@ -1,31 +1,26 @@
 <template>
   <div id="wrapper">
-    <img id="logo" src="~@/assets/logo.png" alt="electron-vue">
-    <main>
-      <div class="left-side">
-        <span class="title">
-          Welcome to your new project!
-        </span>
-        <system-information></system-information>
-      </div>
-
-      <div class="right-side">
-        <div class="doc">
-          <div class="title">Getting Started</div>
-          <p>
-            electron-vue comes packed with detailed documentation that covers everything from
-            internal configurations, using the project structure, building your application,
-            and so much more.
-          </p>
-          <button @click="open('https://simulatedgreg.gitbooks.io/electron-vue/content/')">Read the Docs</button><br><br>
-        </div>
-        <div class="doc">
-          <div class="title alt">Other Documentation</div>
-          <button class="alt" @click="open('https://electron.atom.io/docs/')">Electron</button>
-          <button class="alt" @click="open('https://vuejs.org/v2/guide/')">Vue.js</button>
-        </div>
-      </div>
-    </main>
+    <v-toolbar class="pink mb-2 elevation-1">
+      <v-toolbar-title class="white--text">Assignment Tasks</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon to="/create"><v-icon class="white--text">note_add</v-icon></v-btn>
+      <v-btn icon>
+        <v-icon>search</v-icon>
+      </v-btn>
+    </v-toolbar>
+    
+    <v-card v-for="task in tasks" :key="task.id">
+      <v-card-title>{{task.title}}</v-card-title>
+      <v-card-actions>
+        <span class="grey--text">{{ task.deadline }}</span>
+        <v-spacer></v-spacer>
+        <v-btn @click.native="removeTask(task)" class="red white--text" dark>
+          <v-icon dark>delete</v-icon>
+            Delete Task
+        </v-btn>
+      </v-card-actions>
+      <hr>
+    </v-card>
   </div>
 </template>
 
@@ -34,10 +29,24 @@
 
   export default {
     name: 'landing-page',
+    mounted () { this.$store.commit('getTasks') },
+    computed: {
+      tasks () {
+        console.log('tasks')
+        console.log(this.$store.state.tasks)
+        return this.$store.state.tasks
+      },
+      alert () {
+        return this.$store.getters.alert
+      }
+    },
     components: { SystemInformation },
     methods: {
       open (link) {
         this.$electron.shell.openExternal(link)
+      },
+      removeTask (task) {
+        this.$store.commit('removeTask', task)
       }
     }
   }
