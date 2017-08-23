@@ -20,8 +20,7 @@
 <script>
   export default {
     name: 'assignme',
-    mounted () { console.log(this.$store.getters.alert) },
-    data () { return { showAlert: this.alert.show } },
+    data () { return { showAlert: false } },
     watch: {
       showAlert (value) {
         if (value === false && this.alert.show === true) {
