@@ -1,6 +1,6 @@
 <template>
  <div>
-    <v-btn flat to='/' flat><v-icon>chevron_left</v-icon> Back</v-btn>
+    <v-btn flat @click.native="goBack"><v-icon>chevron_left</v-icon> Back</v-btn>
     <v-container class="px-3">
       <v-layout row wrap>
         <v-flex xs12>
@@ -49,7 +49,8 @@
         </v-flex>
 
         <v-flex xs12>
-           <v-btn @click.native="createTask" class="primary" block>Create Task</v-btn>
+           <v-btn v-if="!isEdit" @click.native="createTask" class="primary" block>Create Task</v-btn>
+           <v-btn v-else @click.native="editTask" class="green white--text" block>Update Task</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -59,7 +60,22 @@
 <script>
   export default {
     computed: {
-      alert () { return this.$store.getters.alert }
+      alert () { return this.$store.getters.alert },
+      isEdit () {
+        const isEdit = this.taskToEdit !== null
+        if (isEdit) { Object.assign(this.task, this.taskToEdit) }
+        return isEdit
+      },
+      taskToEdit () { return this.$store.getters.taskToEdit }
+    },
+    watch: {
+      isEdit (value) {
+        console.log('watching isEdit')
+        if (value === true) {
+          console.log('time to set the task to the edit')
+          this.task = this.taskToEdit
+        }
+      }
     },
     data () {
       return {
@@ -84,6 +100,19 @@
       createTask () {
         this.$store.commit('addTask', this.task)
         this.task = this.defaultTask
+        this.$router.push('/')
+      },
+
+      editTask () {
+        this.$store.commit('editTask', this.task)
+        this.task = this.defaultTask
+        this.$router.push('/')
+      },
+
+      goBack () {
+        // whenever you leave the create task window, cleat the taskToEdit
+        // so that when a new task is going to be created there will be no problem
+        this.$store.commit('setTaskToEdit', null)
         this.$router.push('/')
       }
     }
