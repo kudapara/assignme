@@ -120,9 +120,6 @@
     },
     components: { SystemInformation },
     methods: {
-      open (link) {
-        this.$electron.shell.openExternal(link)
-      },
       removeTask () {
         this.$store.commit('removeTask', this.taskToDelete)
         this.taskToDelete = {}
