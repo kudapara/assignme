@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <v-app id="app">
     <!-- show alerts using the snackbar -->
     <v-snackbar
       :success="alert.type === 'success'"
@@ -14,7 +14,7 @@
       <v-btn class="white" @click.native="showAlert = false"><v-icon>close</v-icon>Close</v-btn>
     </v-snackbar>
     <router-view></router-view>
-  </div>
+  </v-app>
 </template>
 
 <script>
