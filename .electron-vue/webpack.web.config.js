@@ -40,6 +40,10 @@ let webConfig = {
         use: 'vue-html-loader'
       },
       {
+        test: /\.styl$/,
+        loader: ['style-loader', 'css-loader', 'stylus-loader']
+      },
+      {
         test: /\.js$/,
         use: 'babel-loader',
         include: [ path.resolve(__dirname, '../src/renderer') ],

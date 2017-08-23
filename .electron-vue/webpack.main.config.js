@@ -29,6 +29,10 @@ let mainConfig = {
         }
       },
       {
+        test: /\.styl$/,
+        loader: ['style-loader', 'css-loader', 'stylus-loader']
+      },
+      {
         test: /\.js$/,
         use: 'babel-loader',
         exclude: /node_modules/
