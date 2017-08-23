@@ -13,14 +13,22 @@
       {{ alert.title }}
       <v-btn class="white" @click.native="showAlert = false"><v-icon>close</v-icon>Close</v-btn>
     </v-snackbar>
-    <router-view></router-view>
+    <v-toolbar class="elevation-0" dense>
+      <v-spacer></v-spacer>
+      <v-chip outline label class="pink pink--text">
+        v{{version}}
+      </v-chip>
+    </v-toolbar>
+    <v-container id="wrapping">
+      <router-view></router-view>
+    </v-container>
   </v-app>
 </template>
 
 <script>
   export default {
     name: 'assignme',
-    data () { return { showAlert: false } },
+    data () { return { showAlert: false, version: require('../../package.json').version } },
     watch: {
       showAlert (value) {
         if (value === false && this.alert.show === true) {
@@ -40,16 +48,4 @@
   /* CSS */
   @import './stylus/main'
   body { font-family: 'Ubuntu', 'Source Sans Pro', sans-serif; }
-
-  #app {
-    background:
-      radial-gradient(  
-        ellipse at top left,
-        rgba(255, 255, 255, 1) 40%,
-        rgba(229, 229, 229, .9) 100%
-      );
-    height: 100vh;
-    padding: 60px 80px;
-    width: 100vw;
-  }
 </style>
