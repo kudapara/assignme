@@ -48,9 +48,6 @@
         <span class="grey--text"><v-icon>date_range</v-icon> DEADLINE: {{ task.deadline }}</span>
         <v-spacer></v-spacer>
 
-        <v-btn icon class="green white--text" @click.native="editTask(task)">
-          <v-icon dark>edit</v-icon>
-        </v-btn>
         <v-btn v-if="taskToExpand !== task.id" icon class="primary white--text" @click.native="taskToExpand = task.id">
           <v-icon dark>expand_more</v-icon>
         </v-btn>
@@ -58,6 +55,10 @@
           <v-icon dark>expand_less</v-icon>
         </v-btn>
 
+        <v-btn icon class="green white--text" @click.native="editTask(task)">
+          <v-icon dark>edit</v-icon>
+        </v-btn>
+        
         <v-btn @click.native="showRemoveDialog(task)" class="red white--text" dark icon>
           <v-icon dark>delete</v-icon>
         </v-btn>
