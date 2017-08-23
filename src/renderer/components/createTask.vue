@@ -55,12 +55,21 @@
           description: '',
           status: 'new',
           deadline: ''
+        },
+
+        defaultTask: {
+          title: '',
+          description: '',
+          status: 'new',
+          deadline: ''
         }
       }
     },
     methods: {
       createTask () {
         this.$store.commit('addTask', this.task)
+        this.task = this.defaultTask
+        this.$router.push('/')
       }
     }
   }
