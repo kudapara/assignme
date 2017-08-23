@@ -18,10 +18,30 @@
         task: true,
         'mb-2': true
       }">
-      <v-card-title>{{task.title}}</v-card-title>
+      <v-card-title><h3 class="title">{{task.title}}</h3></v-card-title>
+      
+      <v-card-text v-if="taskToExpand === task.id">
+        <h6 class="subheading"><v-icon>description</v-icon> Description</h6>
+        <p>{{task.description}}</p>
+
+        <h6 class="subheading"><v-icon>show_chart</v-icon> Status</h6>
+        <p>{{task.status}}</p>
+
+        <h6 class="subheading"><v-icon>date_range</v-icon>Date Created</h6>
+        <p>{{task.created}}</p>
+      </v-card-text>
+
       <v-card-actions>
-        <span class="grey--text">{{ task.deadline }}</span>
+        <span class="grey--text"><v-icon>date_range</v-icon> DEADLINE: {{ task.deadline }}</span>
         <v-spacer></v-spacer>
+
+        <v-btn v-if="taskToExpand !== task.id" icon class="primary" @click.native="taskToExpand = task.id">
+          <v-icon dark>expand_more</v-icon>
+        </v-btn>
+        <v-btn v-if="taskToExpand === task.id" icon class="primary" @click.native="taskToExpand = ''">
+          <v-icon dark>expand_less</v-icon>
+        </v-btn>
+
         <v-btn @click.native="showRemoveDialog(task)" class="red white--text" dark icon>
           <v-icon dark>delete</v-icon>
         </v-btn>
@@ -64,7 +84,8 @@
     data () {
       return {
         dialog: false,
-        taskToDelete: {}
+        taskToDelete: {},
+        taskToExpand: ''
       }
     },
     mounted () { this.$store.commit('getTasks') },
@@ -182,7 +203,7 @@
   .new.task {
     border-left-style:solid;
     border-left-width:2px;
-    border-color:red
+    border-color:red;
   }
   .in_progress.task {
     border-left-style:solid;
