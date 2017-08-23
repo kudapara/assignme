@@ -29,10 +29,24 @@
         </v-flex>
 
         <v-flex xs12>
-          <v-text-field
-            label="Deadline"
-            v-model="task.deadline">
-          </v-text-field>
+          <v-dialog persistent v-model="modal" lazy full-width>
+            <v-text-field
+              slot="activator"
+              label="Picker in dialog"
+              v-model="task.deadline"
+              prepend-icon="event"
+              readonly>
+            </v-text-field>
+            
+            <v-date-picker v-model="task.deadline" scrollable >
+              <template scope="{ save, cancel }">
+                <v-card-actions>
+                  <v-btn flat primary @click.native="cancel()" class="orange--text darken-3">Cancel</v-btn>
+                  <v-btn primary @click.native="save()" class="green">Save</v-btn>
+                </v-card-actions>
+              </template>
+            </v-date-picker>
+          </v-dialog>
         </v-flex>
 
         <v-flex xs12>
@@ -56,6 +70,8 @@
           status: 'new',
           deadline: ''
         },
+        e3: null,
+        modal: false,
 
         defaultTask: {
           title: '',
