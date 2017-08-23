@@ -59,10 +59,19 @@ function finishTask (id) {
     .assign({ status: 'done' })
     .write()
 }
+
+function editTask (task) {
+  db.get('tasks')
+    .find({ id: task.id })
+    .assign(task)
+    .write()
+}
+
 export default {
   createTask,
   getTasks,
   removeTask,
   startTask,
-  finishTask
+  finishTask,
+  editTask
 }
