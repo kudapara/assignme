@@ -22,9 +22,8 @@
       <v-card-actions>
         <span class="grey--text">{{ task.deadline }}</span>
         <v-spacer></v-spacer>
-        <v-btn @click.native="showRemoveDialog(task)" class="red white--text" dark>
+        <v-btn @click.native="showRemoveDialog(task)" class="red white--text" dark icon>
           <v-icon dark>delete</v-icon>
-            Delete Task
         </v-btn>
       </v-card-actions>
     </v-card>
