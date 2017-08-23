@@ -8,7 +8,7 @@
         <v-icon>search</v-icon>
       </v-btn>
     </v-toolbar>
-    
+
     <v-card v-for="task in tasks" :key="task.id">
       <v-card-title>{{task.title}}</v-card-title>
       <v-card-actions>
@@ -19,8 +19,15 @@
             Delete Task
         </v-btn>
       </v-card-actions>
-      <hr>
     </v-card>
+
+    <v-card v-if="!tasks.length">
+      <v-card-text>
+        <h3 class="headline">You have no tasks.</h3>
+        <p>In the mean time you could use your time to research, socialise or dream big.</p>
+      </v-card-text>
+      <v-btn to="/create" class="primary"><v-icon class="white--text">note_add</v-icon>  Create New Task</v-btn>
+    </v-card> 
   </div>
 </template>
 
