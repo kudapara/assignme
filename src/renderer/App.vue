@@ -14,6 +14,7 @@
       <v-btn class="white" @click.native="showAlert = false"><v-icon>close</v-icon>Close</v-btn>
     </v-snackbar>
     <v-toolbar class="elevation-0" dense>
+      <img id="logo" src="~@/assets/logo.png" alt="electron-vue" style="height: 50px">
       <v-spacer></v-spacer>
       <v-chip outline label class="pink pink--text">
         v{{version}}
