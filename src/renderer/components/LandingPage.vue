@@ -58,7 +58,7 @@
         <v-btn icon class="green white--text" @click.native="editTask(task)">
           <v-icon dark>edit</v-icon>
         </v-btn>
-        
+
         <v-btn @click.native="showRemoveDialog(task)" class="red white--text" dark icon>
           <v-icon dark>delete</v-icon>
         </v-btn>
@@ -108,9 +108,7 @@
     mounted () { this.$store.commit('getTasks') },
     computed: {
       tasks () {
-        console.log('tasks')
-        console.log(this.$store.state.tasks)
-        return this.$store.state.tasks
+        return this.$store.getters.tasks
       },
       alert () {
         return this.$store.getters.alert
