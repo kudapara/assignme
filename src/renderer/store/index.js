@@ -41,6 +41,24 @@ export default new Vuex.Store({
       }
     },
 
+    startTask (state, task) {
+      api.startTask(task.id)
+      state.alert = {
+        title: 'successfullt started task',
+        type: 'info',
+        show: true
+      }
+    },
+
+    finishTask (state, task) {
+      api.finishTask(task.id)
+      state.alert = {
+        title: 'successfully finished task',
+        type: 'info',
+        show: true
+      }
+    },
+
     closeAlert (state) {
       state.alert = state.alert = {
         title: '',
