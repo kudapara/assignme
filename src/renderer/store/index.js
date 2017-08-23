@@ -29,7 +29,9 @@ export default new Vuex.Store({
     },
 
     getTasks (state) {
-      state.tasks = api.getTasks()
+      let tasks = []
+      Object.assign(tasks, api.getTasks())
+      state.tasks = tasks
     },
 
     removeTask (state, task) {
@@ -85,6 +87,7 @@ export default new Vuex.Store({
 
   getters: {
     alert: (state) => state.alert,
+    tasks: (state) => state.tasks,
     taskToEdit: (state) => state.taskToEdit
   },
   modules,
