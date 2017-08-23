@@ -1,6 +1,5 @@
 <template>
  <div>
-    <p>{{ alert.message }}</p>
     <v-btn flat to='/' flat><v-icon>chevron_left</v-icon> Back</v-btn>
     <v-container class="px-3">
       <v-layout row wrap>
