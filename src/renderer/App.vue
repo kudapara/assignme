@@ -16,7 +16,7 @@
     <v-toolbar class="elevation-0" dense>
       <img id="logo" src="~@/assets/logo.png" alt="electron-vue" style="height: 50px">
       <v-spacer></v-spacer>
-      <v-btn class="pink white--text">Updates</v-btn>
+      <v-btn class="pink white--text" @click.native="open('https://github.com/kudapara/assignme/releases')">Updates</v-btn>
       <v-chip outline label class="pink pink--text">
         v{{version}}
       </v-chip>
@@ -31,6 +31,11 @@
   export default {
     name: 'assignme',
     data () { return { showAlert: false, version: require('../../package.json').version } },
+    methods: {
+      open (link) {
+        this.$electron.shell.openExternal(link)
+      }
+    },
     watch: {
       showAlert (value) {
         if (value === false && this.alert.show === true) {
