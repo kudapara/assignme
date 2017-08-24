@@ -29,7 +29,7 @@
           </v-chip>
           <span v-if="task.status === 'new'"><v-btn class="orange white--text" @click.native="startTask(task)">Start task</v-btn></span>
           <span v-if="task.status === 'in_progress'"><v-btn class="green white--text" @click.native="finishTask(task)">Finish task</v-btn></span>
-          <span v-if="task.status === 'done'"><v-btn class="red white--text" @click.native="restartTask(task)">Restart task</v-btn></span>
+          <span v-if="task.status === 'done'"><v-btn class="orange white--text" @click.native="startTask(task)">Restart task</v-btn></span>
         </p>
 
         <h6 class="subheading"><v-icon>date_range</v-icon>Date Created</h6>
@@ -93,9 +93,6 @@ export default {
     },
     finishTask (task) {
       this.$store.commit('finishTask', task)
-    },
-    restartTask (task) {
-      this.$store.commit('restartTask', task)
     },
     editTask (task) {
       this.$store.commit('setTaskToEdit', task)

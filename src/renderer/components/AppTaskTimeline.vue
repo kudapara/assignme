@@ -34,7 +34,7 @@
          
           <v-btn v-if="task.status === 'new'" class="cd-read-more orange white--text" @click.native="startTask(task)">Start task</v-btn>
           <v-btn v-if="task.status === 'in_progress'" class="cd-read-more green white--text" @click.native="finishTask(task)">Finish task</v-btn>
-          <v-btn v-if="task.status === 'done'" class="cd-read-more red white--text" @click.native="restartTask(task)">Restart task</v-btn>
+          <v-btn v-if="task.status === 'done'" class="cd-read-more orange white--text" @click.native="startTask(task)">Restart task</v-btn>
           <span class="cd-date"><b>{{task.deadline}}</b></span>
         </div>
       </div>
@@ -64,9 +64,6 @@
       },
       finishTask (task) {
         this.$store.commit('finishTask', task)
-      },
-      restartTask (task) {
-        this.$store.commit('restartTask', task)
       },
       editTask (task) {
         this.$store.commit('setTaskToEdit', task)
