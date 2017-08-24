@@ -14,7 +14,8 @@ export default new Vuex.Store({
       type: 'info', // Either error, info or warning
       show: false
     },
-    taskToEdit: null
+    taskToEdit: null,
+    authUser: null
   },
   mutations: {
     addTask (state, payload) {
@@ -82,11 +83,39 @@ export default new Vuex.Store({
         type: '',
         show: false
       }
+    },
+
+    signIn (state, user) {
+      if (api.signIn(user) === true) {
+        state.authUser = user.username
+        state.alert = {
+          title: 'successfully signed in',
+          type: 'info',
+          show: true
+        }
+      } else {
+        state.authUser = null
+        state.alert = {
+          title: 'Error signing in',
+          type: 'error',
+          show: true
+        }
+      }
+    },
+
+    signOut (state) {
+      state.authUser = null
+      state.alert = {
+        title: 'successfully signed out',
+        type: 'info',
+        show: true
+      }
     }
   },
 
   getters: {
     alert: (state) => state.alert,
+    authUser: (state) => state.authUser,
     tasks: (state) => state.tasks,
     taskToEdit: (state) => state.taskToEdit
   },
