@@ -6,12 +6,27 @@
     </v-btn>
 
     <v-spacer></v-spacer>
-    <v-btn flat class="pink--text" @click.native="open('https://github.com/kudapara/assignme/releases')"><v-icon class="pink--text">update</v-icon> Check for Updates</v-btn>
-    <v-chip outline label class="pink pink--text">
-      v{{version}}
-    </v-chip>
-    <v-btn to="/signin" v-if="showSignInBtn">Signin</v-btn>
-    <v-btn v-if="showSignOutBtn" @click.native="signOut"><v-icon>lock_outline</v-icon> Lock App</v-btn>
+    <!--sho user the version and allow them to check for updates-->
+    <v-menu open-on-click offset-y>
+      <v-btn outline dark slot="activator" class="pink pink--text">v{{version}}</v-btn>
+      <v-list>
+          <v-btn flat class="pink--text" @click.native="open('https://github.com/kudapara/assignme/releases')"><v-icon class="pink--text">update</v-icon> Check for Updates</v-btn>
+      </v-list>
+    </v-menu>
+
+    <v-btn
+      to="/signin"
+      v-if="showSignInBtn"
+      class="pink pink--text">
+      Signin
+    </v-btn>
+
+    <v-btn
+      v-if="showSignOutBtn"
+      @click.native="signOut"
+      class="pink white--text">
+      <v-icon class="white--text">lock_outline</v-icon> Lock App
+    </v-btn>
   </v-toolbar>
 </template>
 
