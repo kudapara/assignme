@@ -17,7 +17,7 @@
 <script>
   export default {
     name: 'AppAlert',
-    
+
     data () {
       return {
         show: this.showAlert

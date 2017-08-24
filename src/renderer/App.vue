@@ -1,7 +1,7 @@
 <template>
   <v-app id="app">
     <!-- show alerts using the snackbar -->
-    <app-alert :alert="alert" @close="closeAlert"></app-alert>
+    <app-alert :alert="alert" :showAlert="showAlert" @close="closeAlert"></app-alert>
     <app-toolbar></app-toolbar>
 
     <v-container id="wrapping">
@@ -19,6 +19,12 @@
 
     components: { AppAlert, AppToolbar },
 
+    data () {
+      return {
+        showAlert: false
+      }
+    },
+
     methods: {
       closeAlert () {
         this.$store.commit('closeAlert')
@@ -27,6 +33,7 @@
 
     computed: {
       alert () {
+        this.showAlert = this.$store.getters.alert.show
         return this.$store.getters.alert
       }
     }
