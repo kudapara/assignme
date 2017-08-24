@@ -7,8 +7,8 @@
       <v-btn-toggle class="white" v-bind:items="displayOptions" mandatory v-model="display"> </v-btn-toggle>
     </v-toolbar>
 
-    <AppTaskTimeline :tasks="tasks" @deleteTask="showRemoveDialog" v-if="display === 'timeline'"></AppTaskTimeline>
-    <AppTaskList :tasks="tasks" @deleteTask="showRemoveDialog" v-if="display === 'list'"></AppTaskList>
+    <AppTaskTimeline :tasks="tasks" @deleteTask="showRemoveDialog" v-if="showTimelineComponent"></AppTaskTimeline>
+    <AppTaskList :tasks="tasks" @deleteTask="showRemoveDialog" v-if="showListComponent"></AppTaskList>
 
     <v-card v-if="!tasks.length">
       <v-card-text>
@@ -65,6 +65,12 @@
       },
       alert () {
         return this.$store.getters.alert
+      },
+      showTimelineComponent () {
+        return this.display === 'timeline' && this.tasks.length > 0
+      },
+      showListComponent () {
+        return this.display === 'list' && this.tasks.length > 0
       }
     },
 
