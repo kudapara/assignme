@@ -15,7 +15,8 @@
           <v-text-field
             label="Description"
             v-model="task.description"
-            prepend-icon="description">
+            prepend-icon="description"
+            multi-line>
           </v-text-field>
         </v-flex>
 
