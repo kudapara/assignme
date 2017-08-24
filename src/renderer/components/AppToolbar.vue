@@ -1,6 +1,5 @@
 <template>
-  <v-toolbar class="elevation-0" dense>
-    <img id="logo" src="~@/assets/logo.png" alt="electron-vue" style="height: 50px">
+  <v-toolbar light class="elevation-1" dense>
     <v-btn flat @click.native="goBack" v-if="showBackBtn">
       <v-icon>chevron_left</v-icon> Back
     </v-btn>
