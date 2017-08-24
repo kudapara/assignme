@@ -29,6 +29,7 @@ If you have any coding skills be sure to open up some useful pull requests. And 
 
 - [ ] Sync
 
+
 ### For those who want to engineer this app with me
 
 Make sure you have [nodejs](http://nodejs.org) and [npm](npmjs) installed on your machine.
