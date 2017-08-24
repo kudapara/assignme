@@ -1,6 +1,5 @@
 <template>
  <div>
-    <v-btn flat @click.native="goBack"><v-icon>chevron_left</v-icon> Back</v-btn>
     <v-container class="px-3">
       <v-layout row wrap>
         <v-flex xs12>
@@ -98,13 +97,6 @@
       editTask () {
         this.$store.commit('editTask', this.task)
         this.task = this.defaultTask
-        this.$router.push('/')
-      },
-
-      goBack () {
-        // whenever you leave the create task window, cleat the taskToEdit
-        // so that when a new task is going to be created there will be no problem
-        this.$store.commit('setTaskToEdit', null)
         this.$router.push('/')
       }
     }
