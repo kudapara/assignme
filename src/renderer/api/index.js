@@ -14,7 +14,13 @@ const db = low(adapter)
     created
   }
 */
-db.defaults({ tasks: [] })
+db.defaults({
+  tasks: [],
+  user: {
+    username: '',
+    password: '',
+    name: ''
+  }})
   .write()
 
 function createTask (task) {
@@ -57,11 +63,21 @@ function editTask (task) {
     .write()
 }
 
+function signIn (user) {
+  const dbUser = {}
+  Object.assign(dbUser, db.get('user')
+    .value())
+
+  if (user.username === dbUser.username && user.password === dbUser.password) return true
+  return false
+}
+
 export default {
   createTask,
   getTasks,
   removeTask,
   startTask,
   finishTask,
-  editTask
+  editTask,
+  signIn
 }
