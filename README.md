@@ -11,23 +11,23 @@ If you have any coding skills be sure to open up some useful pull requests. And 
 [more screenshots](screenshots/readme.md)
 
 ### Milestones
-[x] Adding new task
+- [x] Adding new task
 
-[x] Deleting a task
+- [x] Deleting a task
 
-[x] Editing a task
+- [x] Editing a task
 
-[x] Starting and finishing a task
+- [x] Starting and finishing a task
 
-[] Sorting tasks in order of deadlines
+- [] Sorting tasks in order of deadlines
 
-[] Markdown support to allow us to write comprehensive descriptions
+- [] Markdown support to allow us to write comprehensive descriptions
 
-[] Native notifications for tasks that are almost due
+- [] Native notifications for tasks that are almost due
 
-[] Authentication
-g
-[] Sync
+- [] Authentication
+
+- [] Sync
 
 ### For those who want to engineer this app with me
 
