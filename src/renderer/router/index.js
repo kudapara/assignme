@@ -13,7 +13,7 @@ export default new Router({
     {
       path: '/create',
       name: 'create-task',
-      component: require('@/components/createTask')
+      component: require('@/components/CreateTask')
     },
     {
       path: '*',
