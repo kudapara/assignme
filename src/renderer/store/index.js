@@ -21,6 +21,7 @@ export default new Vuex.Store({
     addTask (state, payload) {
       payload.id = Math.random()
       payload.created = new Date()
+      payload.createdBy = state.authUser
       api.createTask(payload)
       state.alert = {
         title: 'successfully created task',
