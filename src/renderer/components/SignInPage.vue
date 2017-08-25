@@ -1,5 +1,6 @@
 <template>
-  <v-card justify-center style ="margin-top:60px">
+  <div>
+    <v-card v-if="isThereUser"  justify-center style ="margin-top:60px">
     <v-toolbar dark class="pink elevation-1">
       <h3 class="title white--text" dense>Sign in</h3>
     </v-toolbar>
@@ -30,11 +31,19 @@
       <v-btn block class="primary" @click="signIn">Sign in</v-btn>
     </v-card-actions>
   </v-card>
+
+  <AppWelcomeCard v-if="!isThereUser"></AppWelcomeCard>
+  </div>
 </template>
 
 <script>
+import AppWelcomeCard from '@/components/AppWelcomeCard'
 export default {
   name: 'SignInPage',
+  mounted () {
+    this.$store.commit('checkForUser')
+  },
+  components: { AppWelcomeCard },
   data () {
     return {
       user: {
@@ -45,7 +54,8 @@ export default {
   },
 
   computed: {
-    authUser () { return this.$store.getters.authUser }
+    authUser () { return this.$store.getters.authUser },
+    isThereUser () { return this.$store.getters.isThereUser }
   },
 
   watch: {
