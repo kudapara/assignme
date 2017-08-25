@@ -1,6 +1,5 @@
 <template>
-  <v-toolbar class="elevation-0" dense>
-    <img id="logo" src="~@/assets/logo.png" alt="electron-vue" style="height: 50px">
+  <v-toolbar light class="elevation-1" dense>
     <v-btn flat @click.native="goBack" v-if="showBackBtn">
       <v-icon>chevron_left</v-icon> Back
     </v-btn>
@@ -8,7 +7,7 @@
     <v-spacer></v-spacer>
     <!--sho user the version and allow them to check for updates-->
     <v-menu open-on-click offset-y>
-      <v-btn outline dark slot="activator" class="pink pink--text">v{{version}}</v-btn>
+      <v-btn outline dark slot="activator" class="pink pink--text"><v-icon class="pink--text">label</v-icon> {{version}}</v-btn>
       <v-list>
           <v-btn flat class="pink--text" @click.native="open('https://github.com/kudapara/assignme/releases')"><v-icon class="pink--text">update</v-icon> Check for Updates</v-btn>
       </v-list>
@@ -17,8 +16,8 @@
     <v-btn
       to="/signin"
       v-if="showSignInBtn"
-      class="pink pink--text">
-      Signin
+      class="pink white--text">
+      Sign in
     </v-btn>
 
     <v-btn
@@ -66,7 +65,7 @@
       },
 
       showSignInBtn () {
-        return !this.authUser && this.$route.name !== 'signin-page'
+        return !this.authUser && this.$route.name !== 'signin-page' && this.$route.name !== 'signup-page'
       },
 
       showSignOutBtn () {

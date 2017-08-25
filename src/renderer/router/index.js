@@ -29,6 +29,11 @@ export default new Router({
       component: require('@/components/SignInPage')
     },
     {
+      path: '/signup',
+      name: 'signup-page',
+      component: require('@/components/SignUpPage')
+    },
+    {
       path: '*',
       redirect: '/'
     }
