@@ -32,12 +32,12 @@
           <span v-if="task.status === 'done'"><v-btn class="orange white--text" @click.native="startTask(task)">Restart task</v-btn></span>
         </p>
 
-        <h6 class="subheading"><v-icon>date_range</v-icon>Date Created</h6>
-        <p>{{task.created}}</p>
+        <h6 class="subheading"><v-icon>date_range</v-icon>Task Created</h6>
+        <p>{{task.created | niceDate }} </p>
       </v-card-text>
 
       <v-card-actions>
-        <span class="grey--text"><v-icon>date_range</v-icon> DEADLINE: {{ task.deadline }}</span>
+        <span class="grey--text"><v-icon>date_range</v-icon><b> Due {{ task.deadline | niceDate }}</b></span>
         <v-spacer></v-spacer>
 
         <v-btn v-if="taskToExpand !== task.id" icon class="primary white--text" @click.native="taskToExpand = task.id">
@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'AppTaskList',
   props: {
@@ -94,6 +95,11 @@ export default {
     editTask (task) {
       this.$store.commit('setTaskToEdit', task)
       this.$router.push('/create')
+    }
+  },
+  filters: {
+    niceDate (value) {
+      return moment().to(value)
     }
   }
 }
