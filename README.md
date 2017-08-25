@@ -1,6 +1,6 @@
 # assignme
 
-![image](screenshots/list_of_tasks.png) 
+![image](screenshots/list_of_tasks_timeline_view.png) 
 
 I am tired of forgetting to complete and submit my assignments in time. So i have created this project to help me remember the assignments I have been given.
 
