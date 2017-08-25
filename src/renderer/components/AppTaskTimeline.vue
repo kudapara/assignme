@@ -25,7 +25,7 @@
           </h3>
           <p>{{task.description}}</p>
 
-          <v-btn small fab class="cd-read-more primary white--text" @click.native="$emit('deleteTask', task)">
+          <v-btn small fab class="cd-read-more red white--text" @click.native="$emit('deleteTask', task)">
             <v-icon class="white--text">delete</v-icon>
           </v-btn>
           <v-btn small fab class="cd-read-more green white--text" @click.native="editTask(task)">
@@ -35,7 +35,7 @@
           <v-btn v-if="task.status === 'new'" class="cd-read-more orange white--text" @click.native="startTask(task)">Start task</v-btn>
           <v-btn v-if="task.status === 'in_progress'" class="cd-read-more green white--text" @click.native="finishTask(task)">Finish task</v-btn>
           <v-btn v-if="task.status === 'done'" class="cd-read-more orange white--text" @click.native="startTask(task)">Restart task</v-btn>
-          <span class="cd-date"><b>{{task.deadline}}</b></span>
+          <span class="cd-date"><b>Due {{task.deadline | niceDate}}</b></span>
         </div>
       </div>
   
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+  import moment from 'moment'
   export default {
     name: 'AppTaskTimeline',
     props: {
@@ -68,6 +69,11 @@
       editTask (task) {
         this.$store.commit('setTaskToEdit', task)
         this.$router.push('/create')
+      }
+    },
+    filters: {
+      niceDate (value) {
+        return moment().to(value)
       }
     }
   }
