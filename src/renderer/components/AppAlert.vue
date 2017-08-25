@@ -27,6 +27,12 @@
     watch: {
       showAlert (value) {
         this.show = value
+      },
+
+      show (value) {
+        if (value === false) {
+          this.$store.commit('closeAlert')
+        }
       }
     },
 
