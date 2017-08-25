@@ -7,7 +7,7 @@
     <v-spacer></v-spacer>
     <!--sho user the version and allow them to check for updates-->
     <v-menu open-on-click offset-y>
-      <v-btn outline dark slot="activator" class="pink pink--text">v{{version}}</v-btn>
+      <v-btn outline dark slot="activator" class="pink pink--text"><v-icon class="pink--text">label</v-icon> {{version}}</v-btn>
       <v-list>
           <v-btn flat class="pink--text" @click.native="open('https://github.com/kudapara/assignme/releases')"><v-icon class="pink--text">update</v-icon> Check for Updates</v-btn>
       </v-list>
