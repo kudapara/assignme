@@ -15,7 +15,8 @@ export default new Vuex.Store({
       show: false
     },
     taskToEdit: null,
-    authUser: null
+    authUser: null,
+    isThereUser: false
   },
   mutations: {
     addTask (state, payload) {
@@ -86,6 +87,11 @@ export default new Vuex.Store({
       }
     },
 
+    showAlert (state, payload) {
+      state.alert = payload
+      state.alert.show = true
+    },
+
     signIn (state, user) {
       if (api.signIn(user) === true) {
         state.authUser = user.username
@@ -111,12 +117,29 @@ export default new Vuex.Store({
         type: 'info',
         show: true
       }
+    },
+
+    signUp (state, user) {
+      api.signUp(user)
+      state.authUser = user.username
+      state.alert = {
+        title: 'successfully created account' + user.name,
+        type: 'info',
+        show: true
+      }
+    },
+
+    checkForUser (state) {
+      if (api.checkForUser()) {
+        state.isThereUser = true
+      }
     }
   },
 
   getters: {
     alert: (state) => state.alert,
     authUser: (state) => state.authUser,
+    isThereUser: (state) => state.isThereUser,
     tasks: (state) => state.tasks,
     taskToEdit: (state) => state.taskToEdit
   },
