@@ -27,11 +27,20 @@
           </v-layout>
         </v-flex>
 
-        <v-flex xs12>
-          <v-dialog persistent v-model="modal" lazy full-width>
+        <v-flex xs12 sm6>
+            <v-menu
+              lazy
+              :close-on-content-click="false"
+              v-model="dateMenu"
+              transition="scale-transition"
+              offset-y
+              full-width
+              :nudge-left="40"
+              max-width="290px"
+            >
             <v-text-field
               slot="activator"
-              label="Picker in dialog"
+              label="Due date"
               v-model="task.deadline"
               prepend-icon="event"
               readonly>
@@ -45,7 +54,25 @@
                 </v-card-actions>
               </template>
             </v-date-picker>
-          </v-dialog>
+          </v-menu>
+        </v-flex>
+        <v-flex xs12 sm6>
+          <v-menu
+            lazy
+            :close-on-content-click="false"
+            v-model="timeMenu"
+            transition="scale-transition"
+            offset-y
+            :nudge-left="40"
+          >
+          <v-text-field
+            slot="activator"
+            label="Due time"
+            v-model="task.deadlineTime"
+            prepend-icon="access_time"
+            readonly
+          ></v-text-field>
+          <v-time-picker v-model="task.deadlineTime" autosave format="24hr"></v-time-picker></v-menu>
         </v-flex>
 
         <v-flex xs12>
@@ -58,6 +85,7 @@
 </template>
 
 <script>
+  import moment from 'moment'
   export default {
     computed: {
       alert () { return this.$store.getters.alert },
@@ -74,10 +102,12 @@
           title: '',
           description: '',
           status: 'new',
-          deadline: ''
+          deadline: moment().format('YYYY-MM-DD'),
+          deadlineTime: '10:00'
         },
         e3: null,
-        modal: false,
+        dateMenu: false,
+        timeMenu: false,
 
         defaultTask: {
           title: '',
@@ -89,15 +119,20 @@
     },
     methods: {
       createTask () {
+        this.task.deadline = this.formatDate()
         this.$store.commit('addTask', this.task)
         this.task = this.defaultTask
         this.$router.push('/')
       },
 
       editTask () {
+        this.task.deadline = this.formatDate()
         this.$store.commit('editTask', this.task)
         this.task = this.defaultTask
         this.$router.push('/')
+      },
+      formatDate () {
+        return moment(this.task.deadline).add(this.task.deadlineTime.split('').splice(0, 2).join(''), 'hours')
       }
     }
   }
