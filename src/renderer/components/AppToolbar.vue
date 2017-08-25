@@ -16,8 +16,8 @@
     <v-btn
       to="/signin"
       v-if="showSignInBtn"
-      class="pink pink--text">
-      Signin
+      class="pink white--text">
+      Sign in
     </v-btn>
 
     <v-btn
@@ -65,7 +65,7 @@
       },
 
       showSignInBtn () {
-        return !this.authUser && this.$route.name !== 'signin-page'
+        return !this.authUser && this.$route.name !== 'signin-page' && this.$route.name !== 'signup-page'
       },
 
       showSignOutBtn () {
