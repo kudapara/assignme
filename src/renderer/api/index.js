@@ -11,7 +11,8 @@ const db = low(adapter)
     description,
     status,
     deadline,
-    created
+    created,
+    createdBy
   }
 */
 db.defaults({
@@ -72,6 +73,16 @@ function signIn (user) {
   return false
 }
 
+function signUp (user) {
+  console.log(user)
+  db.set('user', user)
+    .write()
+}
+
+function checkForUser () {
+  return db.get('user').value().username !== ''
+}
+
 export default {
   createTask,
   getTasks,
@@ -79,5 +90,7 @@ export default {
   startTask,
   finishTask,
   editTask,
-  signIn
+  signIn,
+  signUp,
+  checkForUser
 }
