@@ -71,9 +71,6 @@ export default {
     }
   },
   computed: {
-    tasks () {
-      return this.$store.getters.tasks
-    },
     alert () {
       return this.$store.getters.alert
     }
