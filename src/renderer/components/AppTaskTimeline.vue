@@ -28,13 +28,13 @@
           <v-btn small fab class="cd-read-more red white--text" @click.native="$emit('deleteTask', task)">
             <v-icon class="white--text">delete</v-icon>
           </v-btn>
-          <v-btn small fab class="cd-read-more green white--text" @click.native="editTask(task)">
+          <v-btn small fab class="cd-read-more green white--text" @click.native="$emit('editTask', task)">
             <v-icon class="white--text">edit</v-icon>
           </v-btn>
          
-          <v-btn v-if="task.status === 'new'" class="cd-read-more orange white--text" @click.native="startTask(task)">Start task</v-btn>
-          <v-btn v-if="task.status === 'in_progress'" class="cd-read-more green white--text" @click.native="finishTask(task)">Finish task</v-btn>
-          <v-btn v-if="task.status === 'done'" class="cd-read-more orange white--text" @click.native="startTask(task)">Restart task</v-btn>
+          <v-btn v-if="task.status === 'new'" class="cd-read-more orange white--text" @click.native="$emit('startTask', task)">Start task</v-btn>
+          <v-btn v-if="task.status === 'in_progress'" class="cd-read-more green white--text" @click.native="$emit('finishTask', task)">Finish task</v-btn>
+          <v-btn v-if="task.status === 'done'" class="cd-read-more orange white--text" @click.native="$emit('startTask', task)">Restart task</v-btn>
           <span class="cd-date"><b>Due {{task.deadline | niceDate}}</b></span>
         </div>
       </div>
@@ -49,27 +49,6 @@
     name: 'AppTaskTimeline',
     props: {
       tasks: Array
-    },
-    methods: {
-      removeTask () {
-        this.$store.commit('removeTask', this.taskToDelete)
-        this.taskToDelete = {}
-        this.dialog = false
-      },
-      showRemoveDialog (task) {
-        this.taskToDelete = task
-        this.dialog = true
-      },
-      startTask (task) {
-        this.$store.commit('startTask', task)
-      },
-      finishTask (task) {
-        this.$store.commit('finishTask', task)
-      },
-      editTask (task) {
-        this.$store.commit('setTaskToEdit', task)
-        this.$router.push('/create')
-      }
     },
     filters: {
       niceDate (value) {

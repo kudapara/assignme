@@ -27,9 +27,9 @@
             }">
             {{task.status}}
           </v-chip>
-          <span v-if="task.status === 'new'"><v-btn class="orange white--text" @click.native="startTask(task)">Start task</v-btn></span>
-          <span v-if="task.status === 'in_progress'"><v-btn class="green white--text" @click.native="finishTask(task)">Finish task</v-btn></span>
-          <span v-if="task.status === 'done'"><v-btn class="orange white--text" @click.native="startTask(task)">Restart task</v-btn></span>
+          <span v-if="task.status === 'new'"><v-btn class="orange white--text" @click.native="$emit('startTask', task)">Start task</v-btn></span>
+          <span v-if="task.status === 'in_progress'"><v-btn class="green white--text" @click.native="$emit('finishTask', task)">Finish task</v-btn></span>
+          <span v-if="task.status === 'done'"><v-btn class="orange white--text" @click.native="$emit('startTask', task)">Restart task</v-btn></span>
         </p>
 
         <h6 class="subheading"><v-icon>date_range</v-icon>Task Created</h6>
@@ -47,7 +47,7 @@
           <v-icon dark>expand_less</v-icon>
         </v-btn>
 
-        <v-btn icon class="green white--text" @click.native="editTask(task)">
+        <v-btn icon class="green white--text" @click.native="$emit('editTask', task)">
           <v-icon dark>edit</v-icon>
         </v-btn>
 
@@ -74,27 +74,6 @@ export default {
   computed: {
     alert () {
       return this.$store.getters.alert
-    }
-  },
-  methods: {
-    removeTask () {
-      this.$store.commit('removeTask', this.taskToDelete)
-      this.taskToDelete = {}
-      this.dialog = false
-    },
-    showRemoveDialog (task) {
-      this.taskToDelete = task
-      this.dialog = true
-    },
-    startTask (task) {
-      this.$store.commit('startTask', task)
-    },
-    finishTask (task) {
-      this.$store.commit('finishTask', task)
-    },
-    editTask (task) {
-      this.$store.commit('setTaskToEdit', task)
-      this.$router.push('/create')
     }
   },
   filters: {

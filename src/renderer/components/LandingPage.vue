@@ -7,8 +7,25 @@
       <v-btn-toggle class="white" v-bind:items="displayOptions" mandatory v-model="display"> </v-btn-toggle>
     </v-toolbar>
 
-    <AppTaskTimeline :tasks="tasks" @deleteTask="showRemoveDialog" v-if="showTimelineComponent"></AppTaskTimeline>
-    <AppTaskList :tasks="tasks" @deleteTask="showRemoveDialog" v-if="showListComponent"></AppTaskList>
+    <AppTaskTimeline
+      :tasks="tasks"
+      @deleteTask="showRemoveDialog"
+      @startTask="startTask"
+      @editTask="editTask"
+      @restartTask="startTask"
+      @finishTask="finishTask"
+      v-if="showTimelineComponent">
+    </AppTaskTimeline>
+
+    <AppTaskList
+      :tasks="tasks"
+      @deleteTask="showRemoveDialog"
+      @startTask="startTask"
+      @editTask="editTask"
+      @restartTask="startTask"
+      @finishTask="finishTask"
+      v-if="showListComponent">
+    </AppTaskList>
 
     <v-card v-if="!tasks.length">
       <v-card-text>
@@ -85,6 +102,16 @@
       showRemoveDialog (task) {
         this.taskToDelete = task
         this.dialog = true
+      },
+      startTask (task) {
+        this.$store.commit('startTask', task)
+      },
+      finishTask (task) {
+        this.$store.commit('finishTask', task)
+      },
+      editTask (task) {
+        this.$store.commit('setTaskToEdit', task)
+        this.$router.push('/create')
       }
     }
   }
