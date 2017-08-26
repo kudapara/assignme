@@ -3,7 +3,7 @@
     <v-btn flat @click.native="goBack" v-if="showBackBtn">
       <v-icon>chevron_left</v-icon> Back
     </v-btn>
-
+    <v-toolbar-title class="pink--text">assignme</v-toolbar-title>
     <v-spacer></v-spacer>
     <!--sho user the version and allow them to check for updates-->
     <v-menu open-on-click offset-y>
