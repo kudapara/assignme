@@ -51,7 +51,7 @@
           <v-icon dark>edit</v-icon>
         </v-btn>
 
-        <v-btn @click.native="showRemoveDialog(task)" class="red white--text" dark icon>
+        <v-btn @click.native="$emit('deleteTask', task)" class="red white--text" dark icon>
           <v-icon dark>delete</v-icon>
         </v-btn>
       </v-card-actions>
