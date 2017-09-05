@@ -3,10 +3,11 @@ import Vuex from 'vuex'
 
 import modules from './modules'
 import api from '../api'
+import { ipcRenderer } from 'electron'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     tasks: [],
     alert: {
@@ -31,9 +32,7 @@ export default new Vuex.Store({
       }
     },
 
-    getTasks (state) {
-      let tasks = []
-      Object.assign(tasks, api.getTasks())
+    setTasks (state, tasks) {
       state.tasks = tasks
     },
 
@@ -143,6 +142,19 @@ export default new Vuex.Store({
     tasks: (state) => state.tasks,
     taskToEdit: (state) => state.taskToEdit
   },
+
+  // asynchronous code here
+  actions: {
+    getTasks () {
+      ipcRenderer.send('get-tasks')
+    }
+  },
   modules,
   strict: process.env.NODE_ENV !== 'production'
 })
+
+ipcRenderer.on('all-tasks', (event, tasks) => {
+  store.commit('setTasks', tasks)
+})
+
+export default store
