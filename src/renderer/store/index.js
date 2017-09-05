@@ -37,7 +37,6 @@ const store = new Vuex.Store({
     },
 
     removeTask (state, task) {
-      api.removeTask(task.id)
       state.tasks.splice(state.tasks.findIndex(x => x.id === task.id), 1)
       state.alert = {
         title: 'successfully removed task',
@@ -147,6 +146,9 @@ const store = new Vuex.Store({
   actions: {
     getTasks () {
       ipcRenderer.send('get-tasks')
+    },
+    removeTask ({ commit }, task) {
+      ipcRenderer.send('remove-task', task.id)
     }
   },
   modules,
@@ -157,4 +159,7 @@ ipcRenderer.on('all-tasks', (event, tasks) => {
   store.commit('setTasks', tasks)
 })
 
+ipcRenderer.on('removed-task', (event, id) => {
+  store.commit('removeTask', { id })
+})
 export default store
