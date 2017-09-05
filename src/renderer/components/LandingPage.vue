@@ -77,7 +77,7 @@
       }
     },
 
-    mounted () { this.$store.commit('getTasks') },
+    mounted () { this.$store.dispatch('getTasks') },
 
     computed: {
       displayTasks () {
