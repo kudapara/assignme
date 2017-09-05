@@ -1,6 +1,10 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
+import Api from '../api'
+
+const dbPath = `${app.getPath('documents')}/db.json`
+const api = new Api({ dbPath })
 
 /**
  * Set `__static` path to static files in production
@@ -44,6 +48,14 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+/** ****************** API events*****************/
+
+ipcMain.on('get-tasks', (event) => {
+  api.getTasks().then(tasks => {
+    event.sender.send('all-tasks', tasks)
+  })
 })
 
 /**
