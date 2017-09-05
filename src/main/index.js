@@ -58,6 +58,11 @@ ipcMain.on('get-tasks', (event) => {
   })
 })
 
+ipcMain.on('remove-task', (event, id) => {
+  api.removeTask(id).then(() => {
+    event.sender.send('removed-task', id)
+  })
+})
 /**
  * Auto Updater
  *
