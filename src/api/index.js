@@ -14,4 +14,15 @@ export default class Api {
       resolve(tasks)
     })
   }
+
+  // remove task using the id
+  removeTask (id) {
+    return new Promise((resolve, reject) => {
+      this.db.get('tasks')
+        .remove({ id })
+        .cloneDeep()
+        .write()
+      resolve()
+    })
+  }
 }
