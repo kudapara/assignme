@@ -118,7 +118,7 @@
 
     methods: {
       removeTask () {
-        this.$store.commit('removeTask', this.taskToDelete)
+        this.$store.dispatch('removeTask', this.taskToDelete)
         this.taskToDelete = {}
         this.dialog = false
       },
