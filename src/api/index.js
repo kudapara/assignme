@@ -36,4 +36,15 @@ export default class Api {
       resolve()
     })
   }
+
+  // Edit any field of the task and update it in the db
+  updateTask (task) {
+    return new Promise((resolve, reject) => {
+      this.db.get('tasks')
+        .find({ id: task.id })
+        .assign(task)
+        .write()
+      resolve()
+    })
+  }
 }
