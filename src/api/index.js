@@ -47,4 +47,14 @@ export default class Api {
       resolve()
     })
   }
+
+  // reate a brand new task
+  createTask (task) {
+    return new Promise((resolve, reject) => {
+      this.db.get('tasks')
+        .push(task)
+        .write()
+      resolve()
+    })
+  }
 }
