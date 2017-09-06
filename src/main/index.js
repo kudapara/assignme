@@ -63,6 +63,12 @@ ipcMain.on('remove-task', (event, id) => {
     event.sender.send('removed-task', id)
   })
 })
+
+ipcMain.on('update-task-status', (event, { task, status }) => {
+  api.updateTaskStatus({ task, status }).then(() => {
+    event.sender.send('updated-task-status', { task, status })
+  })
+})
 /**
  * Auto Updater
  *
