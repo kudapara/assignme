@@ -46,7 +46,7 @@ const store = new Vuex.Store({
     },
 
     startTask (state, task) {
-      api.startTask(task.id)
+      state.tasks[state.tasks.findIndex(x => x.id === task.id)].status = 'in_progress'
       state.alert = {
         title: 'successfullt started task',
         type: 'info',
@@ -55,7 +55,7 @@ const store = new Vuex.Store({
     },
 
     finishTask (state, task) {
-      api.finishTask(task.id)
+      state.tasks[state.tasks.findIndex(x => x.id === task.id)].status = 'done'
       state.alert = {
         title: 'successfully finished task',
         type: 'info',
@@ -149,6 +149,12 @@ const store = new Vuex.Store({
     },
     removeTask ({ commit }, task) {
       ipcRenderer.send('remove-task', task.id)
+    },
+    startTask ({ commit }, task) {
+      ipcRenderer.send('update-task-status', { task, status: 'in_progress' })
+    },
+    finishTask ({ commit }, task) {
+      ipcRenderer.send('update-task-status', { task, status: 'done' })
     }
   },
   modules,
@@ -161,5 +167,15 @@ ipcRenderer.on('all-tasks', (event, tasks) => {
 
 ipcRenderer.on('removed-task', (event, id) => {
   store.commit('removeTask', { id })
+})
+
+ipcRenderer.on('updated-task-status', (event, { task, status }) => {
+  let mutation
+  if (status === 'in_progress') {
+    mutation = 'startTask'
+  } else if (status === 'done') {
+    mutation = 'finishTask'
+  }
+  store.commit(mutation, task)
 })
 export default store
