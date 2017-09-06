@@ -45,7 +45,7 @@
       goBack () {
         // whenever you leave the create task window, cleat the taskToEdit
         // so that when a new task is going to be created there will be no problem
-        this.$store.commit('setTaskToEdit', null)
+        this.$store.commit('setTaskToUpdate', null)
         this.$router.push('/')
       },
 
