@@ -133,7 +133,7 @@
         this.$store.dispatch('finishTask', task)
       },
       editTask (task) {
-        this.$store.commit('setTaskToEdit', task)
+        this.$store.commit('setTaskToUpdate', task)
         this.$router.push('/create')
       }
     }
