@@ -25,4 +25,15 @@ export default class Api {
       resolve()
     })
   }
+
+  // Update the status of the task.
+  updateTaskStatus ({ task, status }) {
+    return new Promise((resolve, reject) => {
+      this.db.get('tasks')
+        .find({ id: task.id })
+        .assign({ status })
+        .write()
+      resolve()
+    })
+  }
 }
