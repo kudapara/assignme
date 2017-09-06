@@ -127,10 +127,10 @@
         this.dialog = true
       },
       startTask (task) {
-        this.$store.commit('startTask', task)
+        this.$store.dispatch('startTask', task)
       },
       finishTask (task) {
-        this.$store.commit('finishTask', task)
+        this.$store.dispatch('finishTask', task)
       },
       editTask (task) {
         this.$store.commit('setTaskToEdit', task)
