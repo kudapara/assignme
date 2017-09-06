@@ -15,7 +15,7 @@ const store = new Vuex.Store({
       type: 'info', // Either error, info or warning
       show: false
     },
-    taskToEdit: null,
+    taskToUpdate: null,
     authUser: null,
     isThereUser: false
   },
@@ -63,15 +63,14 @@ const store = new Vuex.Store({
       }
     },
 
-    setTaskToEdit (state, task) {
-      state.taskToEdit = task
+    setTaskToUpdate (state, task) {
+      state.taskToUpdate = task
     },
 
-    editTask (state, task) {
-      api.editTask(task)
-      state.taskToEdit = null
+    clearTaskToUpdate (state) {
+      state.taskToUpdate = null
       state.alert = {
-        title: 'successfully edited task',
+        title: 'successfully updated task',
         type: 'info',
         show: true
       }
@@ -139,7 +138,7 @@ const store = new Vuex.Store({
     authUser: (state) => state.authUser,
     isThereUser: (state) => state.isThereUser,
     tasks: (state) => state.tasks,
-    taskToEdit: (state) => state.taskToEdit
+    taskToUpdate: (state) => state.taskToUpdate
   },
 
   // asynchronous code here
@@ -155,6 +154,9 @@ const store = new Vuex.Store({
     },
     finishTask ({ commit }, task) {
       ipcRenderer.send('update-task-status', { task, status: 'done' })
+    },
+    updateTask ({ commit }, task) {
+      ipcRenderer.send('update-task', task)
     }
   },
   modules,
@@ -177,5 +179,9 @@ ipcRenderer.on('updated-task-status', (event, { task, status }) => {
     mutation = 'finishTask'
   }
   store.commit(mutation, task)
+})
+
+ipcRenderer.on('updated-task', (event, task) => {
+  store.commit('clearTaskToUpdate', task)
 })
 export default store
