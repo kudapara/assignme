@@ -81,6 +81,13 @@ ipcMain.on('create-task', (event, task) => {
     event.sender.send('created-task', task)
   })
 })
+
+ipcMain.on('signin', (event, user) => {
+  api.signIn(user).then(success => {
+    let signal = success ? 'signed-in' : 'signin-error'
+    event.sender.send(signal, success ? user : null)
+  })
+})
 /**
  * Auto Updater
  *
