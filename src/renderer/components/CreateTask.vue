@@ -122,7 +122,7 @@
     methods: {
       createTask () {
         this.task.deadline = this.formatDate()
-        this.$store.commit('addTask', this.task)
+        this.$store.dispatch('createTask', this.task)
         this.task = this.defaultTask
         this.$router.push('/')
       },
