@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import modules from './modules'
-import api from '../api'
 import { ipcRenderer } from 'electron'
 
 Vue.use(Vuex)
@@ -17,7 +16,8 @@ const store = new Vuex.Store({
     },
     taskToUpdate: null,
     authUser: null,
-    isThereUser: false
+    isThereUser: false,
+    checkedForUser: false
   },
   mutations: {
     setTasks (state, tasks) {
@@ -104,7 +104,6 @@ const store = new Vuex.Store({
     },
 
     signUp (state, user) {
-      api.signUp(user)
       state.authUser = user.username
       state.alert = {
         title: 'successfully created account' + user.name,
@@ -114,9 +113,12 @@ const store = new Vuex.Store({
     },
 
     checkForUser (state) {
-      if (api.checkForUser()) {
-        state.isThereUser = true
-      }
+      ipcRenderer.send('check-for-user')
+    },
+
+    isThereUser (state, isThereUser) {
+      state.checkedForUser = true
+      state.isThereUser = isThereUser
     }
   },
 
@@ -125,7 +127,8 @@ const store = new Vuex.Store({
     authUser: (state) => state.authUser,
     isThereUser: (state) => state.isThereUser,
     tasks: (state) => state.tasks,
-    taskToUpdate: (state) => state.taskToUpdate
+    taskToUpdate: (state) => state.taskToUpdate,
+    checkedForUser: (state) => state.checkedForUser
   },
 
   // asynchronous code here
@@ -153,6 +156,9 @@ const store = new Vuex.Store({
     },
     signIn ({ commit }, user) {
       ipcRenderer.send('signin', user)
+    },
+    signUp ({ commit }, user) {
+      ipcRenderer.send('signup', user)
     }
   },
   modules,
@@ -195,5 +201,13 @@ ipcRenderer.on('signed-in', (event, user) => {
 
 ipcRenderer.on('signin-error', () => {
   store.commit('signInError')
+})
+
+ipcRenderer.on('checked-for-user', (event, isThereUser) => {
+  store.commit('isThereUser', isThereUser)
+})
+
+ipcRenderer.on('signed-up', (event, user) => {
+  store.commit('signUp', user)
 })
 export default store
