@@ -57,4 +57,16 @@ export default class Api {
       resolve()
     })
   }
+
+  // sign in the user by comparing  the supplied
+  // credentials to the ones in the database
+  signIn (user) {
+    return new Promise((resolve, reject) => {
+      const dbUser = {}
+      Object.assign(dbUser, this.db.get('user')
+        .value())
+
+      resolve(user.username === dbUser.username && user.password === dbUser.password)
+    })
+  }
 }
