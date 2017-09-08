@@ -2,7 +2,7 @@
   <v-card class="pink darken-2 white--text" style ="margin-top:60px">
     <v-card-title primary-title>
       <div class="headline">Never miss an assignment again!</div>
-      <div>Let us help you remember the tasks you should do let you focus on doing them better.</div>
+      <div>Let us help you remember the tasks you should do and let you focus on doing them better.</div>
     </v-card-title>
     <v-card-actions>
          <v-btn raised light class="white pink--text" to="/signup">
