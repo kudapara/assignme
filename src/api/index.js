@@ -1,4 +1,5 @@
 import initDb from './db'
+import { hashedPassword, comparePasswords } from './auth'
 
 export default class Api {
   constructor (options) {
@@ -66,7 +67,7 @@ export default class Api {
       Object.assign(dbUser, this.db.get('user')
         .value())
 
-      resolve(user.username === dbUser.username && user.password === dbUser.password)
+      resolve(user.username === dbUser.username && comparePasswords(user.password, dbUser.password))
     })
   }
 
@@ -78,6 +79,7 @@ export default class Api {
   // create a new user
   signUp (user) {
     return new Promise((resolve, reject) => {
+      user.password = hashedPassword(user.password)
       this.db.set('user', user)
         .write()
       resolve()
