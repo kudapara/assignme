@@ -20,18 +20,6 @@ const store = new Vuex.Store({
     isThereUser: false
   },
   mutations: {
-    addTask (state, payload) {
-      payload.id = Math.random()
-      payload.created = new Date()
-      payload.createdBy = state.authUser
-      api.createTask(payload)
-      state.alert = {
-        title: 'successfully created task',
-        type: 'info',
-        show: true
-      }
-    },
-
     setTasks (state, tasks) {
       state.tasks = tasks
     },
@@ -157,6 +145,12 @@ const store = new Vuex.Store({
     },
     updateTask ({ commit }, task) {
       ipcRenderer.send('update-task', task)
+    },
+    createTask ({ state }, task) {
+      task.id = Math.random()
+      task.created = new Date()
+      task.createdBy = state.authUser
+      ipcRenderer.send('create-task', task)
     }
   },
   modules,
@@ -183,5 +177,13 @@ ipcRenderer.on('updated-task-status', (event, { task, status }) => {
 
 ipcRenderer.on('updated-task', (event, task) => {
   store.commit('clearTaskToUpdate', task)
+})
+
+ipcRenderer.on('created-task', (event, task) => {
+  store.commit('showAlert', {
+    title: 'successfully created task',
+    type: 'info',
+    show: true
+  })
 })
 export default store
