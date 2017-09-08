@@ -76,8 +76,8 @@
         </v-flex>
 
         <v-flex xs12>
-           <v-btn v-if="!isEdit" @click.native="createTask" class="primary" block>Create Task</v-btn>
-           <v-btn v-else @click.native="editTask" class="green white--text" block>Update Task</v-btn>
+           <v-btn v-if="!isUpdate" @click.native="createTask" class="primary" block>Create Task</v-btn>
+           <v-btn v-else @click.native="updateTask" class="green white--text" block>Update Task</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -88,13 +88,14 @@
   import moment from 'moment'
   export default {
     computed: {
+
       alert () { return this.$store.getters.alert },
-      isEdit () {
-        const isEdit = this.taskToEdit !== null
-        if (isEdit) { Object.assign(this.task, this.taskToEdit) }
-        return isEdit
+      isUpdate () {
+        const isUpdate = this.taskToUpdate !== null
+        if (isUpdate) { Object.assign(this.task, this.taskToUpdate) }
+        return isUpdate
       },
-      taskToEdit () { return this.$store.getters.taskToEdit }
+      taskToUpdate () { return this.$store.getters.taskToUpdate }
     },
     data () {
       return {
@@ -113,26 +114,27 @@
           title: '',
           description: '',
           status: 'new',
-          deadline: ''
+          deadline: moment().format('YYYY-MM-DD'),
+          deadlineTime: '10:00'
         }
       }
     },
     methods: {
       createTask () {
         this.task.deadline = this.formatDate()
-        this.$store.commit('addTask', this.task)
+        this.$store.dispatch('createTask', this.task)
         this.task = this.defaultTask
         this.$router.push('/')
       },
 
-      editTask () {
+      updateTask () {
         this.task.deadline = this.formatDate()
-        this.$store.commit('editTask', this.task)
+        this.$store.dispatch('updateTask', this.task)
         this.task = this.defaultTask
         this.$router.push('/')
       },
       formatDate () {
-        return moment(this.task.deadline).add(this.task.deadlineTime.split('').splice(0, 2).join(''), 'hours')
+        return moment(this.task.deadline).add(this.task.deadlineTime.split('').splice(0, 2).join(''), 'hours')._d
       }
     }
   }

@@ -80,7 +80,7 @@ export default {
       const user = this.user
       if (user.password === user.confirmPassword) {
         delete user.confirmPassword
-        this.$store.commit('signUp', user)
+        this.$store.dispatch('signUp', user)
       } else {
         this.$store.commit('showAlert', {
           title: 'Please enter matching passwords',

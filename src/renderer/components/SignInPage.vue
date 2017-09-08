@@ -32,7 +32,7 @@
     </v-card-actions>
   </v-card>
 
-  <AppWelcomeCard v-if="!isThereUser"></AppWelcomeCard>
+  <AppWelcomeCard v-if="checkedForUser && !isThereUser"></AppWelcomeCard>
   </div>
 </template>
 
@@ -55,7 +55,8 @@ export default {
 
   computed: {
     authUser () { return this.$store.getters.authUser },
-    isThereUser () { return this.$store.getters.isThereUser }
+    isThereUser () { return this.$store.getters.isThereUser },
+    checkedForUser () { return this.$store.getters.checkedForUser }
   },
 
   watch: {
@@ -69,7 +70,7 @@ export default {
   methods: {
     signIn () {
       const user = this.user
-      this.$store.commit('signIn', user)
+      this.$store.dispatch('signIn', user)
     }
   }
 }

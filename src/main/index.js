@@ -1,6 +1,10 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
+import Api from '../api'
+
+const dbPath = `${app.getPath('documents')}/db.json`
+const api = new Api({ dbPath })
 
 /**
  * Set `__static` path to static files in production
@@ -46,6 +50,54 @@ app.on('activate', () => {
   }
 })
 
+/** ****************** API events*****************/
+
+ipcMain.on('get-tasks', (event) => {
+  api.getTasks().then(tasks => {
+    event.sender.send('all-tasks', tasks)
+  })
+})
+
+ipcMain.on('remove-task', (event, id) => {
+  api.removeTask(id).then(() => {
+    event.sender.send('removed-task', id)
+  })
+})
+
+ipcMain.on('update-task-status', (event, { task, status }) => {
+  api.updateTaskStatus({ task, status }).then(() => {
+    event.sender.send('updated-task-status', { task, status })
+  })
+})
+
+ipcMain.on('update-task', (event, task) => {
+  api.updateTask(task).then(() => {
+    event.sender.send('updated-task', task)
+  })
+})
+
+ipcMain.on('create-task', (event, task) => {
+  api.createTask(task).then(() => {
+    event.sender.send('created-task', task)
+  })
+})
+
+ipcMain.on('signin', (event, user) => {
+  api.signIn(user).then(success => {
+    let signal = success ? 'signed-in' : 'signin-error'
+    event.sender.send(signal, success ? user : null)
+  })
+})
+
+ipcMain.on('check-for-user', (event) => {
+  event.sender.send('checked-for-user', api.checkForUserSync())
+})
+
+ipcMain.on('signup', (event, user) => {
+  api.signUp(user).then(() => {
+    event.sender.send('signed-up', user)
+  })
+})
 /**
  * Auto Updater
  *

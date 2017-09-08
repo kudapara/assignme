@@ -77,7 +77,7 @@
       }
     },
 
-    mounted () { this.$store.commit('getTasks') },
+    mounted () { this.$store.dispatch('getTasks') },
 
     computed: {
       displayTasks () {
@@ -118,7 +118,7 @@
 
     methods: {
       removeTask () {
-        this.$store.commit('removeTask', this.taskToDelete)
+        this.$store.dispatch('removeTask', this.taskToDelete)
         this.taskToDelete = {}
         this.dialog = false
       },
@@ -127,13 +127,13 @@
         this.dialog = true
       },
       startTask (task) {
-        this.$store.commit('startTask', task)
+        this.$store.dispatch('startTask', task)
       },
       finishTask (task) {
-        this.$store.commit('finishTask', task)
+        this.$store.dispatch('finishTask', task)
       },
       editTask (task) {
-        this.$store.commit('setTaskToEdit', task)
+        this.$store.commit('setTaskToUpdate', task)
         this.$router.push('/create')
       }
     }
