@@ -75,6 +75,12 @@ ipcMain.on('update-task', (event, task) => {
     event.sender.send('updated-task', task)
   })
 })
+
+ipcMain.on('create-task', (event, task) => {
+  api.createTask(task).then(() => {
+    event.sender.send('created-task', task)
+  })
+})
 /**
  * Auto Updater
  *
