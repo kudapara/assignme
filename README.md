@@ -25,7 +25,7 @@ If you have any coding skills be sure to open up some useful pull requests. And 
 
 - [ ] Native notifications for tasks that are almost due
 
-- [ ] Authentication
+- [x] Authentication
 
 - [ ] Sync
 
