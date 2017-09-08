@@ -88,6 +88,16 @@ ipcMain.on('signin', (event, user) => {
     event.sender.send(signal, success ? user : null)
   })
 })
+
+ipcMain.on('check-for-user', (event) => {
+  event.sender.send('checked-for-user', api.checkForUserSync())
+})
+
+ipcMain.on('signup', (event, user) => {
+  api.signUp(user).then(() => {
+    event.sender.send('signed-up', user)
+  })
+})
 /**
  * Auto Updater
  *
