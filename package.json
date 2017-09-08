@@ -53,6 +53,7 @@
     }
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "lowdb": "^0.17.1",
     "moment": "^2.18.1",
     "vue": "^2.3.3",
