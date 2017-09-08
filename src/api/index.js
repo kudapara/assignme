@@ -69,4 +69,18 @@ export default class Api {
       resolve(user.username === dbUser.username && user.password === dbUser.password)
     })
   }
+
+  // Synchronously check if user exists
+  checkForUserSync () {
+    return this.db.get('user').value().username !== ''
+  }
+
+  // create a new user
+  signUp (user) {
+    return new Promise((resolve, reject) => {
+      this.db.set('user', user)
+        .write()
+      resolve()
+    })
+  }
 }
