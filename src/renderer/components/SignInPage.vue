@@ -69,7 +69,7 @@ export default {
   methods: {
     signIn () {
       const user = this.user
-      this.$store.commit('signIn', user)
+      this.$store.dispatch('signIn', user)
     }
   }
 }
