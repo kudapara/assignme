@@ -78,23 +78,22 @@ const store = new Vuex.Store({
     },
 
     signIn (state, user) {
-      if (api.signIn(user) === true) {
-        state.authUser = user.username
-        state.alert = {
-          title: 'successfully signed in',
-          type: 'info',
-          show: true
-        }
-      } else {
-        state.authUser = null
-        state.alert = {
-          title: 'Error signing in',
-          type: 'error',
-          show: true
-        }
+      state.authUser = user.username
+
+      state.alert = {
+        title: 'successfully signed in',
+        type: 'info',
+        show: true
       }
     },
-
+    signInError (state) {
+      state.authUser = null
+      state.alert = {
+        title: 'Error signing in',
+        type: 'error',
+        show: true
+      }
+    },
     signOut (state) {
       state.authUser = null
       state.alert = {
@@ -151,6 +150,9 @@ const store = new Vuex.Store({
       task.created = new Date()
       task.createdBy = state.authUser
       ipcRenderer.send('create-task', task)
+    },
+    signIn ({ commit }, user) {
+      ipcRenderer.send('signin', user)
     }
   },
   modules,
@@ -185,5 +187,13 @@ ipcRenderer.on('created-task', (event, task) => {
     type: 'info',
     show: true
   })
+})
+
+ipcRenderer.on('signed-in', (event, user) => {
+  store.commit('signIn', user)
+})
+
+ipcRenderer.on('signin-error', () => {
+  store.commit('signInError')
 })
 export default store
