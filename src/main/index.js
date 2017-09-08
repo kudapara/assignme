@@ -2,8 +2,13 @@
 
 import { app, BrowserWindow, ipcMain } from 'electron'
 import Api from '../api'
+import fs from 'fs'
 
-const dbPath = `${app.getPath('documents')}/db.json`
+const dbFolder = `${app.getPath('documents')}/assignme`
+const dbPath = `${dbFolder}/db.json`
+
+// Check if the ~/Documents/assignme folder and create it if it doesn't exist
+if (!fs.existsSync(dbFolder)) fs.mkdirSync(dbFolder)
 const api = new Api({ dbPath })
 
 /**
