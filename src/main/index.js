@@ -5,7 +5,9 @@ import Api from '../api'
 import fs from 'fs'
 
 const dbFolder = `${app.getPath('documents')}/assignme`
-const dbPath = `${dbFolder}/db.json`
+const dbPath = process.env.NODE_ENV === 'development'
+  ? `${dbFolder}/db_dev.json`
+  : `${dbFolder}/db.json`
 
 // Check if the ~/Documents/assignme folder and create it if it doesn't exist
 if (!fs.existsSync(dbFolder)) fs.mkdirSync(dbFolder)
@@ -29,7 +31,7 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 620,
+    height: 650,
     useContentSize: true,
     width: 1000
   })
