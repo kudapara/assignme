@@ -13,7 +13,7 @@
     </main>
 
     <!--The footer region -->
-    <v-footer class="pa-3" fixed>
+    <v-footer class="pa-3 pinkish" fixed>
       <v-spacer></v-spacer>
       <div class="pink--text">assignme v{{version}}</div>
     </v-footer>
@@ -60,4 +60,7 @@
   /* CSS */
   @import './stylus/main'
   body { font-family: 'Ubuntu', 'Source Sans Pro', sans-serif; }
+  .pinkish {
+    border-top 0.2px solid pink
+  }
 </style>
