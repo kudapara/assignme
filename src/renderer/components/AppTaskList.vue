@@ -40,19 +40,19 @@
         <span class="grey--text"><v-icon>date_range</v-icon><b> Due {{ task.deadline | niceDate }}</b></span>
         <v-spacer></v-spacer>
 
-        <v-btn v-if="taskToExpand !== task.id" icon class="primary white--text" @click.native="taskToExpand = task.id">
-          <v-icon dark>expand_more</v-icon>
+        <v-btn v-if="taskToExpand !== task.id" class="white--text" @click.native="taskToExpand = task.id" small fab>
+          <v-icon class="primary--text">expand_more</v-icon>
         </v-btn>
-        <v-btn v-if="taskToExpand === task.id" icon class="primary white--text" @click.native="taskToExpand = ''">
-          <v-icon dark>expand_less</v-icon>
-        </v-btn>
-
-        <v-btn icon class="green white--text" @click.native="$emit('editTask', task)">
-          <v-icon dark>edit</v-icon>
+        <v-btn v-if="taskToExpand === task.id" class="white--text" @click.native="taskToExpand = ''" small fab>
+          <v-icon class="primary--text">expand_less</v-icon>
         </v-btn>
 
-        <v-btn @click.native="$emit('deleteTask', task)" class="red white--text" dark icon>
-          <v-icon dark>delete</v-icon>
+        <v-btn class="white--text" @click.native="$emit('editTask', task)" small fab>
+          <v-icon class="green--text">edit</v-icon>
+        </v-btn>
+
+        <v-btn @click.native="$emit('deleteTask', task)" class=" white--text" small fab>
+          <v-icon class="red--text">delete</v-icon>
         </v-btn>
       </v-card-actions>
     </v-card>
