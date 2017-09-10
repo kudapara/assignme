@@ -1,6 +1,6 @@
 <template>
  <div>
-    <section id="cd-timeline" class="cd-container">
+    <section id="cd-timeline" class="cd-container" v-if="tasks.length">
       <div class="cd-timeline-block" v-for="task in tasks" :key="task.id" >
         <div :class="{
         new: task.status === 'new',
