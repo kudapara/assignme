@@ -1,6 +1,6 @@
 <template>
  <div>
-    <section id="cd-timeline" class="cd-container">
+    <section id="cd-timeline" class="cd-container" v-if="tasks.length">
       <div class="cd-timeline-block" v-for="task in tasks" :key="task.id" >
         <div :class="{
         new: task.status === 'new',
@@ -25,11 +25,11 @@
           </h3>
           <p>{{task.description}}</p>
 
-          <v-btn small fab class="cd-read-more red white--text" @click.native="$emit('deleteTask', task)">
-            <v-icon class="white--text">delete</v-icon>
+          <v-btn small fab class="cd-read-more  white--text" @click.native="$emit('deleteTask', task)">
+            <v-icon class="red--text">delete</v-icon>
           </v-btn>
-          <v-btn small fab class="cd-read-more green white--text" @click.native="$emit('editTask', task)">
-            <v-icon class="white--text">edit</v-icon>
+          <v-btn small fab class="cd-read-more white--text" @click.native="$emit('editTask', task)">
+            <v-icon class="green--text">edit</v-icon>
           </v-btn>
          
           <v-btn v-if="task.status === 'new'" class="cd-read-more orange white--text" @click.native="$emit('startTask', task)">Start task</v-btn>

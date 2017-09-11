@@ -5,7 +5,8 @@
       :info="alert.type === 'info'"
       :error="alert.type === 'error'"
       :timeout="2000"
-      top
+      bottom
+      right
       v-model="show">
       {{ alert.title }}
       <v-btn class="white" @click.native="$emit('close')">

@@ -1,37 +1,40 @@
 <template>
   <div>
-    <v-card v-if="isThereUser"  justify-center style ="margin-top:60px">
-    <v-toolbar dark class="pink elevation-1">
-      <h3 class="title white--text" dense>Sign in</h3>
-    </v-toolbar>
+     <v-layout row>
+      <v-flex xs12 sm6 offset-sm4>
+        <v-card v-if="isThereUser"  justify-center style ="margin-top:60px; max-width:400px">
+        <v-card-title>
+          <h3 class="title dark-gray--text">Sign in</h3>
+        </v-card-title>
 
-    <v-card-text>
-      <v-layout row wrap>
-        <v-flex xs12>
-          <v-text-field
-            label="Username"
-            v-model="user.username"
-            prepend-icon="person">
-          </v-text-field>
-        </v-flex>
+        <v-card-text>
+          <v-layout row wrap>
+            <v-flex xs12>
+              <v-text-field
+                label="Username"
+                v-model="user.username"
+                prepend-icon="person">
+              </v-text-field>
+            </v-flex>
 
-        <v-flex xs12>
-          <v-text-field
-            label="Password"
-            v-model="user.password"
-            prepend-icon="lock"
-            type="password"
-            @keyup.native.enter="signIn">
-          </v-text-field>
-        </v-flex>
-      </v-layout>
-    </v-card-text>
+            <v-flex xs12>
+              <v-text-field
+                label="Password"
+                v-model="user.password"
+                prepend-icon="lock"
+                type="password"
+                @keyup.native.enter="signIn">
+              </v-text-field>
+            </v-flex>
+          </v-layout>
+        </v-card-text>
 
-    <v-card-actions>
-      <v-btn block class="primary" @click="signIn">Sign in</v-btn>
-    </v-card-actions>
-  </v-card>
-
+        <v-card-actions>
+          <v-btn block class="pink white--text" @click="signIn">Sign in</v-btn>
+        </v-card-actions>
+      </v-card>
+      </v-flex>
+    </v-layout>
   <AppWelcomeCard v-if="checkedForUser && !isThereUser"></AppWelcomeCard>
   </div>
 </template>

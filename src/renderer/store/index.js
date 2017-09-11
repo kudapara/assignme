@@ -15,6 +15,7 @@ const store = new Vuex.Store({
       show: false
     },
     taskToUpdate: null,
+    taskStatus: 'idle',
     authUser: null,
     isThereUser: false,
     checkedForUser: false
@@ -22,6 +23,10 @@ const store = new Vuex.Store({
   mutations: {
     setTasks (state, tasks) {
       state.tasks = tasks
+    },
+
+    setTaskStatus (state, status) {
+      state.taskStatus = status
     },
 
     removeTask (state, task) {
@@ -96,6 +101,7 @@ const store = new Vuex.Store({
     },
     signOut (state) {
       state.authUser = null
+      state.tasks = []
       state.alert = {
         title: 'successfully signed out',
         type: 'info',
@@ -128,6 +134,7 @@ const store = new Vuex.Store({
     isThereUser: (state) => state.isThereUser,
     tasks: (state) => state.tasks,
     taskToUpdate: (state) => state.taskToUpdate,
+    taskStatus: (state) => state.taskStatus,
     checkedForUser: (state) => state.checkedForUser
   },
 
