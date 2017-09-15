@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import { sort } from './utils'
 import modules from './modules'
 import { ipcRenderer } from 'electron'
 
@@ -132,7 +132,7 @@ const store = new Vuex.Store({
     alert: (state) => state.alert,
     authUser: (state) => state.authUser,
     isThereUser: (state) => state.isThereUser,
-    tasks: (state) => state.tasks,
+    tasks: (state) => sort.byDeadline(state.tasks),
     taskToUpdate: (state) => state.taskToUpdate,
     taskStatus: (state) => state.taskStatus,
     checkedForUser: (state) => state.checkedForUser
