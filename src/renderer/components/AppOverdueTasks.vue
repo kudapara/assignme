@@ -3,12 +3,13 @@
     <v-card class="mb-3 overdue tasks">
       <v-list subheader>
         <v-subheader><v-icon>timelapse</v-icon> Overdue Tasks</v-subheader>
-          <v-list-tile avatar v-for="task in tasks" v-bind:key="task.title" @click="task.active = true">
+          <v-list-tile avatar v-for="task in tasks" v-bind:key="task.title">
             <v-list-tile-avatar>
               <v-icon class="red--text">fiber_manual_record</v-icon>
             </v-list-tile-avatar>
             <v-list-tile-content>
               <v-list-tile-title v-html="task.title"></v-list-tile-title>
+              <v-list-tile-sub-title>{{ task.deadline | niceDate }}</v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-action>
               <v-menu
@@ -49,10 +50,16 @@
 </template>
 
 <script>
+  import moment from 'moment'
   export default {
     name: 'AppOverdueTasks',
     props: {
       tasks: Array
+    },
+    filters: {
+      niceDate (value) {
+        return moment().to(value)
+      }
     }
   }
 </script>
