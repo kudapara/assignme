@@ -2,11 +2,7 @@
 
 ![image](screenshots/list_of_tasks_timeline_view.png) 
 
-I am tired of forgetting to complete and submit my assignments in time. So i have created this project to help me remember the assignments I have been given.
-
-Of course there are better apps out there but this one is **mine** and suits my needs. Its free and open source (MIT licenced), so you are free to use it however you want.
-
-If you have any coding skills be sure to open up some useful pull requests. And if you are non technical but you feel like you have bright ideas, throw them up in the issues section.
+Out of sheer frustration when I missed several assignments because I had forgotten, I decided to build assignme to be my reminder. It is still a young project and is yet to be given more features, but at its current state it is usable. You can benefit from this piece of software also. You could also help shape its future by suggesting new ideas or contributing with code.
 
 [more screenshots](screenshots/readme.md)
 
@@ -19,7 +15,7 @@ If you have any coding skills be sure to open up some useful pull requests. And 
 
 - [x] Starting and finishing a task
 
-- [ ] Sorting tasks in order of deadlines
+- [x] Sorting tasks in order of deadlines
 
 - [ ] Markdown support to allow us to write comprehensive descriptions
 
@@ -68,4 +64,4 @@ npm run lint
 
 ---
 
-This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[e04a5b5](https://github.com/SimulatedGREG/electron-vue/tree/e04a5b5f09f63265939e00c9dc59a612d9da5bc8) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
+This project was created by [@kudapara](https://twitter.com/kudapara) using [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[e04a5b5](https://github.com/SimulatedGREG/electron-vue/tree/e04a5b5f09f63265939e00c9dc59a612d9da5bc8) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
