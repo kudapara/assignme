@@ -7,6 +7,16 @@
       <v-btn-toggle class="white" v-bind:items="displayOptions" mandatory v-model="display"> </v-btn-toggle>
     </v-toolbar>
 
+    <!-- The overdue tasks -->
+    <AppOverdueTasks
+      :tasks="overdueTasks"
+      @startTask="startTask"
+      @deleteTask="showRemoveDialog"
+      @editTask="editTask"
+      v-if="overdueTasks.length"
+      >
+    </AppOverdueTasks>
+
     <!-- TASK TIMELINE COMPONENT -->
     <AppTaskTimeline
       :tasks="displayTasks"
@@ -90,8 +100,10 @@
 </template>
 
 <script>
+  import AppOverdueTasks from '@/components/AppOverdueTasks'
   import AppTaskTimeline from '@/components/AppTaskTimeline'
   import AppTaskList from '@/components/AppTaskList'
+  import moment from 'moment'
   export default {
     data () {
       return {
@@ -126,6 +138,10 @@
       finishedTasks () {
         return this.allTasks.filter(task => task.status === 'done')
       },
+      overdueTasks () {
+        return this.allTasks
+          .filter(task => moment().isAfter(task.deadline) && task.status === 'new')
+      },
       alert () {
         return this.$store.getters.alert
       },
@@ -145,7 +161,7 @@
       }
     },
 
-    components: { AppTaskTimeline, AppTaskList },
+    components: { AppOverdueTasks, AppTaskTimeline, AppTaskList },
 
     methods: {
       removeTask () {
@@ -158,6 +174,7 @@
         this.dialog = true
       },
       startTask (task) {
+        console.log(task)
         this.$store.dispatch('startTask', task)
       },
       finishTask (task) {
