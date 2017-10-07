@@ -125,6 +125,7 @@
       },
       displayTasks () {
         return this[`${this.taskStatus}Tasks`]
+          .filter(task => !moment().isAfter(task.deadline))
       },
       allTasks () {
         return this.$store.getters.tasks
