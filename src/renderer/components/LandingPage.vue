@@ -125,13 +125,12 @@
       },
       displayTasks () {
         return this[`${this.taskStatus}Tasks`]
-          .filter(task => !moment().isAfter(task.deadline))
       },
       allTasks () {
         return this.$store.getters.tasks
       },
       idleTasks () {
-        return this.allTasks.filter(task => task.status === 'new')
+        return this.allTasks.filter(task => !moment().isAfter(task.deadline) && task.status === 'new')
       },
       startedTasks () {
         return this.allTasks.filter(task => task.status === 'in_progress')
