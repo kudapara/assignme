@@ -19,23 +19,11 @@
 
     <!-- TASK TIMELINE COMPONENT -->
     <AppTaskTimeline
-      :tasks="displayTasks"
-      @deleteTask="showRemoveDialog"
-      @startTask="startTask"
-      @editTask="editTask"
-      @restartTask="startTask"
-      @finishTask="finishTask"
       v-if="showTimelineComponent">
     </AppTaskTimeline>
 
     <!-- TASK LIST COMPONENT -->
     <AppTaskList
-      :tasks="displayTasks"
-      @deleteTask="showRemoveDialog"
-      @startTask="startTask"
-      @editTask="editTask"
-      @restartTask="startTask"
-      @finishTask="finishTask"
       v-if="showListComponent">
     </AppTaskList>
 
