@@ -1,7 +1,14 @@
 <template>
   <div>
+    <!-- Show dialog adking user to confirm if he/she really wants to delete the task -->
+    <AppConfirmDeleteTask
+      :show="showDialog"
+      :taskToDelete="taskToDelete"
+      @close="showDialog = false; taskToDelete = {};">
+    </AppConfirmDeleteTask>
+    
     <v-card
-      v-for="task in tasks" :key="task.id" 
+      v-for="task in displayTasks" :key="task.id" 
       :class="{
         new: task.status === 'new',
         in_progress: task.status === 'in_progress',
@@ -27,9 +34,9 @@
             }">
             {{task.status}}
           </v-chip>
-          <span v-if="task.status === 'new'"><v-btn class="orange white--text" @click.native="$emit('startTask', task)">Start task</v-btn></span>
-          <span v-if="task.status === 'in_progress'"><v-btn class="green white--text" @click.native="$emit('finishTask', task)">Finish task</v-btn></span>
-          <span v-if="task.status === 'done'"><v-btn class="orange white--text" @click.native="$emit('startTask', task)">Restart task</v-btn></span>
+          <span v-if="task.status === 'new'"><v-btn class="orange white--text" @click.native="startTask(task)">Start task</v-btn></span>
+          <span v-if="task.status === 'in_progress'"><v-btn class="green white--text" @click.native="finishTask(task)">Finish task</v-btn></span>
+          <span v-if="task.status === 'done'"><v-btn class="orange white--text" @click.native="startTask(task)">Restart task</v-btn></span>
         </p>
 
         <h6 class="subheading"><v-icon>date_range</v-icon>Task Created</h6>
@@ -47,11 +54,11 @@
           <v-icon class="primary--text">expand_less</v-icon>
         </v-btn>
 
-        <v-btn class="white--text" @click.native="$emit('editTask', task)" small fab>
+        <v-btn class="white--text" @click.native="editTask(task)" small fab>
           <v-icon class="green--text">edit</v-icon>
         </v-btn>
 
-        <v-btn @click.native="$emit('deleteTask', task)" class=" white--text" small fab>
+        <v-btn @click.native="taskToDelete = task; showDialog = true;" class=" white--text" small fab>
           <v-icon class="red--text">delete</v-icon>
         </v-btn>
       </v-card-actions>
@@ -60,26 +67,18 @@
 </template>
 
 <script>
-import moment from 'moment'
-export default {
-  name: 'AppTaskList',
-  props: {
-    tasks: Array
-  },
-  data () {
-    return {
-      taskToExpand: ''
-    }
-  },
-  computed: {
-    alert () {
-      return this.$store.getters.alert
-    }
-  },
-  filters: {
-    niceDate (value) {
-      return moment().to(value)
-    }
-  }
+  import taskMixin from '@/components/mixins/tasks'
+  import AppConfirmDeleteTask from '@/components/AppConfirmDeleteTask'
+
+  export default {
+    name: 'AppTaskList',
+    data () {
+      return {
+        showDialog: false,
+        taskToExpand: ''
+      }
+    },
+    mixins: [taskMixin],
+    components: { AppConfirmDeleteTask }
 }
 </script>
