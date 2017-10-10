@@ -9,12 +9,7 @@
 
     <!-- The overdue tasks -->
     <AppOverdueTasks
-      :tasks="overdueTasks"
-      @startTask="startTask"
-      @deleteTask="showRemoveDialog"
-      @editTask="editTask"
-      v-if="overdueTasks.length"
-      >
+      v-if="overdueTasks.length">
     </AppOverdueTasks>
 
     <!-- TASK TIMELINE COMPONENT -->
@@ -67,23 +62,7 @@
       </v-card-actions>
       </v-card-title>
     </v-card>
-    <!-- Ask for user to confirm delete action -->
-    <v-layout row justify-center style="position: relative;">
-      <v-dialog v-model="dialog" persistent>
-        <v-card dark>
-          <v-card-title>
-            <div class="headline">Delete selected task</div>
-          </v-card-title>
-          <v-card-text>Are you sure you want to delete the <b>{{taskToDelete.title}}</b> task?</v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn class="green" @click.native="dialog = false">Don't delete</v-btn>
-            <v-btn class="red--text darken-1" flat="flat" @click.native="removeTask">Go ahead</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-layout>
-
+  
   </div>
 </template>
 
@@ -91,12 +70,11 @@
   import AppOverdueTasks from '@/components/AppOverdueTasks'
   import AppTaskTimeline from '@/components/AppTaskTimeline'
   import AppTaskList from '@/components/AppTaskList'
-  import moment from 'moment'
+  import taskMixin from '@/components/mixins/tasks'
+
   export default {
     data () {
       return {
-        dialog: false,
-        taskToDelete: {},
         display: 'timeline',
         displayOptions: [
           { icon: 'timeline', value: 'timeline', text: 'timeline' },
@@ -105,73 +83,24 @@
       }
     },
 
+    mixins: [taskMixin],
     mounted () { this.$store.dispatch('getTasks') },
 
     computed: {
       taskStatus () {
         return this.$store.getters.taskStatus
       },
-      displayTasks () {
-        return this[`${this.taskStatus}Tasks`]
-      },
-      allTasks () {
-        return this.$store.getters.tasks
-      },
-      idleTasks () {
-        return this.allTasks.filter(task => !moment().isAfter(task.deadline) && task.status === 'new')
-      },
-      startedTasks () {
-        return this.allTasks.filter(task => task.status === 'in_progress')
-      },
-      finishedTasks () {
-        return this.allTasks.filter(task => task.status === 'done')
-      },
-      overdueTasks () {
-        return this.allTasks
-          .filter(task => moment().isAfter(task.deadline) && task.status === 'new')
-      },
-      alert () {
-        return this.$store.getters.alert
-      },
       showTimelineComponent () {
         return this.display === 'timeline' && this.allTasks.length > 0
       },
       showListComponent () {
         return this.display === 'list' && this.allTasks.length > 0
-      },
-      taskStatuses () {
-        return [
-          { text: `all (${this.allTasks.length})`, value: 'all' },
-          { text: `idle (${this.idleTasks.length})`, value: 'idle' },
-          { text: `started (${this.startedTasks.length})`, value: 'started' },
-          { text: `finished (${this.finishedTasks.length})`, value: 'finished' }
-        ]
       }
     },
 
     components: { AppOverdueTasks, AppTaskTimeline, AppTaskList },
 
     methods: {
-      removeTask () {
-        this.$store.dispatch('removeTask', this.taskToDelete)
-        this.taskToDelete = {}
-        this.dialog = false
-      },
-      showRemoveDialog (task) {
-        this.taskToDelete = task
-        this.dialog = true
-      },
-      startTask (task) {
-        console.log(task)
-        this.$store.dispatch('startTask', task)
-      },
-      finishTask (task) {
-        this.$store.dispatch('finishTask', task)
-      },
-      editTask (task) {
-        this.$store.commit('setTaskToUpdate', task)
-        this.$router.push('/create')
-      },
       showTasksByStatus (status) {
         this.$store.commit('setTaskStatus', status)
       }
@@ -179,22 +108,10 @@
 
     filters: {
       formatStatus (value) {
-        let output = ''
-        switch (value) {
-          case 'all':
-            output = 'all'
-            break
-          case 'idle':
-            output = 'new'
-            break
-          case 'started':
-            output = 'in progress'
-            break
-          case 'finished':
-            output = 'Completed'
-            break
-        }
-        return output.toUpperCase()
+        if (value === 'all') return 'all'.toUpperCase()
+        if (value === 'idle') return 'new'.toUpperCase()
+        if (value === 'started') return 'in progress'.toUpperCase()
+        if (value === 'finished') return 'completed'.toUpperCase()
       }
     }
   }
