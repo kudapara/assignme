@@ -23,6 +23,8 @@ Out of sheer frustration when I missed several assignments because I had forgott
 
 - [x] Authentication
 
+- [ ] Encrypting of the database
+
 - [ ] Sync
 
 
