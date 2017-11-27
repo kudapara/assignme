@@ -30,7 +30,7 @@
               {{task.status}}
             </v-chip>
           </h3>
-          <p>{{task.description}}</p>
+          <pre>{{task.description}}</pre>
 
           <v-btn small fab class="cd-read-more  white--text" @click.native="taskToDelete = task; showDialog = true;">
             <v-icon class="red--text">delete</v-icon>
@@ -67,5 +67,8 @@
 </script>
 
 <style scoped>
-  @import './timeline.css'
+  @import './timeline.css';
+  pre {
+    font: inherit;
+  }
 </style>
